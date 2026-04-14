@@ -15,3 +15,9 @@ mesh = SubResource("PlaneMesh_4xowi")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0153165, 0.00240016, -0.0105922)
 shape = SubResource("BoxShape3D_a202f")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0654459, 0.793239, 2.39049)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.706823, 0.707391, 0, -0.707391, 0.706823, 0, 3.48024, 4.01783)

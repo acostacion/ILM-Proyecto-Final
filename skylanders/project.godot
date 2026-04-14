@@ -11,5 +11,10 @@ config_version=5
 [application]
 
 config/name="skylanders"
+run/main_scene="uid://5vrj63qbor0k"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
