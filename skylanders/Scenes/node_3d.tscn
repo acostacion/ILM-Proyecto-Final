@@ -1,21 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://docx53knmsnb7"]
+[gd_scene load_steps=10 format=3 uid="uid://docx53knmsnb7"]
 
 [ext_resource type="Shader" uid="uid://bka10msfaalh3" path="res://Shaders/hole.gdshader" id="1_7q7q3"]
+[ext_resource type="PackedScene" uid="uid://c14ldgr78r8nv" path="res://Scenes/main_menu.tscn" id="2_bi5fs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bi5fs"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_okq71"]
 material = SubResource("StandardMaterial3D_bi5fs")
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_7q7q3"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_okq71"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_t3l2h"]
 generate_mipmaps = false
 seamless = true
 normalize = false
-noise = SubResource("FastNoiseLite_7q7q3")
+noise = SubResource("FastNoiseLite_okq71")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a8auw"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wosnj"]
 render_priority = 0
 shader = ExtResource("1_7q7q3")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_t3l2h")
@@ -24,7 +25,7 @@ shader_parameter/depth_amount = 3.14
 shader_parameter/fade_amount = 5.9
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4xowi"]
-material = SubResource("ShaderMaterial_a8auw")
+material = SubResource("ShaderMaterial_wosnj")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a202f"]
 size = Vector3(1.995, 0.0402832, 2.00548)
@@ -51,3 +52,5 @@ transform = Transform3D(1, 0, 0, 0, 0.94391, 0.330201, 0, -0.330201, 0.94391, 0.
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.706823, 0.707391, 0, -0.707391, 0.706823, 0, 3.48024, 4.01783)
+
+[node name="MainMenu" parent="." instance=ExtResource("2_bi5fs")]
