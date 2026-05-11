@@ -14,3 +14,10 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+#temporales de compilacion de plugin
+*.obj
+
+# SCons
+.sconsign.dblite
+.scons_opt_cache/
