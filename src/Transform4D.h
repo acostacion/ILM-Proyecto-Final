@@ -24,7 +24,7 @@ public:
 	static const int NOTIFICATION_LOCAL_TRANSFORM_CHANGED = 44;
 	*/
 
-	void set_transform(const Transform3D &p_local); // TODO transform 4d
+	void set_transform(const Transform3D &p_local);
 	Transform3D get_transform() const;
 
 	void set_position(const Vector3 &p_position);
@@ -32,8 +32,7 @@ public:
 
 	void set_rotation(const Vector3 &p_euler_radians);
 	Vector3 get_rotation() const;
-
-	/*
+	
 	void set_rotation_degrees(const Vector3 &p_euler_degrees);
 	Vector3 get_rotation_degrees() const;
 	void set_rotation_order(EulerOrder p_order);
@@ -99,7 +98,6 @@ public:
 	void look_at_from_position(const Vector3 &p_position, const Vector3 &p_target, const Vector3 &p_up = Vector3(0, 1, 0), bool p_use_model_front = false);
 	Vector3 to_local(const Vector3 &p_global_point) const;
 	Vector3 to_global(const Vector3 &p_local_point) const;
-	*/
 
 protected:
 	template <typename T, typename B>
