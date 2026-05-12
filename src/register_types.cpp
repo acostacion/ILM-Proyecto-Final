@@ -13,7 +13,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	GDREGISTER_CLASS(GDExample);
+	GDREGISTER_CLASS(Mesh4D);
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

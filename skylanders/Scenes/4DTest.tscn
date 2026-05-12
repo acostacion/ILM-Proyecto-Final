@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://beortgxi00qq6"]
+
+[node name="4dTest" type="Node3D"]
+
+[node name="Mesh4D" type="Mesh4D" parent="."]
+w_min = -7.805
+rot_xw = 0.12
+rot_yw = -0.72
+rot_zw = 6.28
