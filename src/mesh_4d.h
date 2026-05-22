@@ -40,10 +40,11 @@ namespace godot
 		std::vector<triangle> faces;
 
 		bool show_edges = false; // Mostrar aristas
-		bool show_faces = true; // Mostrar caras (triangulos)
+		bool show_faces = true;	 // Mostrar caras (triangulos)
 	private:
 	protected:
 		static void _bind_methods();
+		float projection_distance = 10.0f;
 
 		float size = 1.0f;
 		float w_min = -0.5f, w_max = 0.5f;
@@ -92,6 +93,13 @@ namespace godot
 			update_mesh();
 		}
 		bool get_wireframe() const { return show_edges; }
+		void set_projection_distance(float p_distance)
+		{
+			projection_distance = p_distance;
+			update_mesh();
+		}
+		float get_projection_distance() const
+		{ return projection_distance; }
 		// Rotaciones 4D
 		void set_rot_xy(float p_rot)
 		{

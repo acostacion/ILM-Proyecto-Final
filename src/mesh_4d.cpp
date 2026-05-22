@@ -81,6 +81,9 @@ void Mesh4D::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_w_min"), &Mesh4D::get_w_min);
 	ClassDB::bind_method(D_METHOD("set_w_max", "w_max"), &Mesh4D::set_w_max);
 	ClassDB::bind_method(D_METHOD("get_w_max"), &Mesh4D::get_w_max);
+	// distancia de proyeccion
+	ClassDB::bind_method(D_METHOD("set_projection_distance", "distance"), &Mesh4D::set_projection_distance);
+	ClassDB::bind_method(D_METHOD("get_projection_distance"), &Mesh4D::get_projection_distance);
 	// Tamanyo del hipercubo
 	ClassDB::bind_method(D_METHOD("set_size", "size"), &Mesh4D::set_size);
 	ClassDB::bind_method(D_METHOD("get_size"), &Mesh4D::get_size);
@@ -91,10 +94,13 @@ void Mesh4D::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_rot_yw"), &Mesh4D::get_rot_yw);
 	ClassDB::bind_method(D_METHOD("set_rot_zw", "v"), &Mesh4D::set_rot_zw);
 	ClassDB::bind_method(D_METHOD("get_rot_zw"), &Mesh4D::get_rot_zw);
+	// Propiedades
+	ADD_GROUP("4D Visual", "see_");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "wireframe", PROPERTY_HINT_RANGE, "0,1,1"), "set_wireframe", "get_wireframe");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "size"), "set_size", "get_size");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "w_min"), "set_w_min", "get_w_min");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "w_max"), "set_w_max", "get_w_max");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "projection_distance"), "set_projection_distance", "get_projection_distance");
 	// Rotaciones 4D
 	ADD_GROUP("4D Rotation", "rot_");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rot_xw", PROPERTY_HINT_RANGE, "-6.28,6.28,0.01"), "set_rot_xw", "get_rot_xw");
@@ -113,7 +119,8 @@ Mesh4D::Mesh4D()
 	Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
 	material->set_albedo(Color(0.2f, 0.7f, 1.0f, 1.0f)); // Azul
 	material->set_shading_mode(BaseMaterial3D::SHADING_MODE_UNSHADED);
-	material->set_cull_mode(BaseMaterial3D::CULL_DISABLED); // Mostrar ambas caras
+	material->set_cull_mode(BaseMaterial3D::CULL_DISABLED);				// Mostrar ambas caras
+	material->set_shading_mode(BaseMaterial3D::SHADING_MODE_PER_PIXEL); // Iluminacion por pixel
 	mesh_instance->set_material_override(material);
 
 	// Vector de vertices en 4D
@@ -172,6 +179,8 @@ Mesh4D::Mesh4D()
 	for (int i = 0; i < 16; i++)
 	{
 		// Cada bit de i representa si la coordenada es +h o -h en esa dimension
+		// el indice corresponde a la posicion del vertice en el hipercubo,
+		// y se puede usar para generar las caras 1 = 1, 0 = -1
 		float x = ((i >> 0) & 1) ? 1.0f : -1.0f;
 		float y = ((i >> 1) & 1) ? 1.0f : -1.0f;
 		float z = ((i >> 2) & 1) ? 1.0f : -1.0f;
@@ -193,7 +202,7 @@ void godot::Mesh4D::generate_faces()
 {
 
 	// Generar los 24 cuadrados del hipercubo 4D
-	// Hay C(4,2) = 6 formas de elegir 2 dimensiones que varían
+	// Hay C(4,2) = 6 formas de elegir 2 dimensiones que varian
 	// Para cada forma, hay 2^2 = 4 valores para las dimensiones fijas
 	// Total = 6 × 4 = 24 cuadrados
 
@@ -205,29 +214,32 @@ void godot::Mesh4D::generate_faces()
 		{
 			// Verificar que v1 y v2 difieran en exactamente 2 bits (2 dimensiones)
 			int diff = v1.index ^ v2.index; // XOR
-			if (count_set_bits(diff) == 2)
+			if (count_set_bits(diff) != 2)	// si es igual a 2 v1 y v2 son vertices opuestos en exactamente 2 dimensiones, formando un cuadrado
+				continue;
+			// Extraer los dos bits que difieren
+			int bit1 = -1, bit2 = -1;
+
+			// Encontrar la posicion de los bits que difieren
+			for (int b = 0; b < 4; b++)
 			{
-				
-				// Extraer los dos bits que difieren
-				int bit1 = -1, bit2 = -1;
-				for (int b = 0; b < 4; b++)
+				if ((diff >> b) & 1)
 				{
-					if ((diff >> b) & 1)
+					if (bit1 == -1)
+						bit1 = b;
+					else
 					{
-						if (bit1 == -1) bit1 = b;
-						else { bit2 = b; break; }
+						bit2 = b;
+						break;
 					}
 				}
-				
-				// Encontrar los otros 2 vErtices que forman el cuadrado con v1 y v2
-				int v3_index = v1.index ^ (1 << bit1);  // Flip solo bit1
-				int v4_index = v1.index ^ (1 << bit2);  // Flip solo bit2
-				if (v1.index < v3_index)		// Solo procesar una vez
-				{
-					faces.push_back({v1.index, v3_index, v2.index});
-					faces.push_back({v3_index, v4_index, v2.index});
-				}
 			}
+
+			// Obtener los otros dos vertices del cuadrado formado por v1 y v2
+			int v3_index = v1.index ^ (1 << bit1); // Flip solo bit1
+			int v4_index = v1.index ^ (1 << bit2); // Flip solo bit2
+			// Construimos los triangulos que forman el cuadrado
+			faces.push_back({v1.index, v3_index, v2.index});
+			faces.push_back({v3_index, v4_index, v2.index});
 		}
 	}
 }
@@ -238,12 +250,11 @@ void Mesh4D::update_mesh()
 		return;
 
 	float h = size / 2.0f;
-	const float projection_distance = 3.0f;
 
 	// vertices proyectados en 3D
 	std::vector<Vector3> projected;
 	std::vector<int> filtered_indices; // Indices de vertices que pasaron el filtro W
-	std::vector<int> index_mapping;	   // Mapeo de índice original a índice en projected
+	std::vector<int> index_mapping;	   // Mapeo de índice original a índice en projected, si no esta visible => -1
 	index_mapping.resize(16, -1);
 	for (const auto &v_org : vertex)
 	{
@@ -272,39 +283,54 @@ void Mesh4D::update_mesh()
 		return;
 	}
 
+	// herramienta para construir la malla a partir de los vertices proyectados
 	SurfaceTool *st = memnew(SurfaceTool);
-	if (show_faces)
-		st->begin(Mesh::PRIMITIVE_TRIANGLES);
-	else
-		st->begin(Mesh::PRIMITIVE_LINES);
-
-	for (const auto &v : projected)
-	{
-		st->add_vertex(v);
-	}
+	st->begin(show_faces ? Mesh::PRIMITIVE_TRIANGLES : Mesh::PRIMITIVE_LINES);
 
 	// Para cada cuadrado, crear 2 triangulos
 	if (show_faces)
 	{
+		int vertex_count = 0;
 		//  pinta caras
 		for (const auto &face : faces)
 		{
-			// si todos los vertices del cuadrado no estan visibles, se omite la cara
+			// // si todos los vertices del cuadrado no estan visibles, se omite la cara
 			if (index_mapping[face.v1] == -1 || index_mapping[face.v2] == -1 || index_mapping[face.v3] == -1)
 				continue;
 
+			// Obtener indices de los vertices del triangulo en la malla proyectada
+			int idx1 = index_mapping[face.v1];
+			int idx2 = index_mapping[face.v2];
+			int idx3 = index_mapping[face.v3];
+
+			// Obtener posiciones para calcular normal
+			Vector3 p1 = projected[idx1];
+			Vector3 p2 = projected[idx2];
+			Vector3 p3 = projected[idx3];
+
+			// Calcular la normal
+			Vector3 normal = (p2 - p1).cross(p3 - p1).normalized();
+
+			// Agregar a la malla su normal y vertices
+			st->set_normal(normal);
+			st->add_vertex(p1);
+			st->add_vertex(p2);
+			st->add_vertex(p3);
 			// Triangulo
-			st->add_index(index_mapping[face.v1]);
-			st->add_index(index_mapping[face.v2]);
-			st->add_index(index_mapping[face.v3]);
+			st->add_index(vertex_count);
+			st->add_index(vertex_count + 1);
+			st->add_index(vertex_count + 2);
+			vertex_count += 3;
 		}
 	}
 	else
 	{
+		for (const auto &v : projected)
+			st->add_vertex(v);
+
 		// pinta aristas
 		// Crea malla de lineas conectando vertices adyacentes
 		// (en un hipercubo, los vertices adyacentes son aquellos que difieren en exactamente un bit en su indice)
-		// if (show_edges)
 		{
 			for (int a = 0; a < (int)filtered_indices.size(); a++)
 			{
