@@ -41,13 +41,17 @@ namespace godot
 
 		bool show_edges = false; // Mostrar aristas
 		bool show_faces = true;	 // Mostrar caras (triangulos)
+
+		void draw_faces(const std::vector<Vector4>& transformed_vertex);
+		void draw_edges(const std::vector<Vector4>& transformed_vertex);
 	private:
 	protected:
 		static void _bind_methods();
-		float projection_distance = 10.0f;
+		float w_min = -0.5f, w_max = 0.5f;
+		float projection_distance = 3.0f;
+		bool orthographic = false;
 
 		float size = 1.0f;
-		float w_min = -0.5f, w_max = 0.5f;
 		float rot_xy = 0.0f, rot_xz = 0.0f, rot_xw = 0.0f;
 		float rot_yz = 0.0f, rot_yw = 0.0f, rot_zw = 0.0f;
 		MeshInstance3D *mesh_instance = nullptr;
@@ -93,6 +97,12 @@ namespace godot
 			update_mesh();
 		}
 		bool get_wireframe() const { return show_edges; }
+		void set_orthographic(bool p_ortho)
+		{
+			orthographic = p_ortho;
+			update_mesh();
+		}
+		bool get_orthographic() const { return orthographic; }
 		void set_projection_distance(float p_distance)
 		{
 			projection_distance = p_distance;

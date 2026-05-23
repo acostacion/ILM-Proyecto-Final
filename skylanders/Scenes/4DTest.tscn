@@ -3,6 +3,3 @@
 [node name="4dTest" type="Node3D"]
 
 [node name="Mesh4D" type="Mesh4D" parent="."]
-projection_distance = 1e+15
-rot_xw = 0.84
-rot_yw = 1.08

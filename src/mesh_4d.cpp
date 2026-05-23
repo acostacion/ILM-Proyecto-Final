@@ -10,7 +10,19 @@
 #include <godot_cpp/variant/color.hpp>
 
 using namespace godot;
-// HELPERS
+#pragma region HELPERS
+
+// Brian Kernighan's Algorithm para contar bits activos
+static int count_set_bits(int n)
+{
+	int count = 0;
+	while (n > 0)
+	{
+		n &= (n - 1);
+		count += 1;
+	}
+	return count;
+}
 
 static Vector4 rotate4D(Vector4 v,
 						float xy, float xz, float xw,
@@ -59,16 +71,93 @@ static Vector4 rotate4D(Vector4 v,
 	return Vector4(x, y, z, w);
 }
 
-// Brian Kernighan's Algorithm para contar bits activos
-static int count_set_bits(int n)
+static Vector3 v4_to_v3(const Vector4 &v4, bool orthographic, float projection_distance)
 {
-	int count = 0;
-	while (n > 0)
+	Vector3 v3;
+	float scale;
+	if (orthographic)
+		scale = 1;
+	else
+		scale = projection_distance / (projection_distance - v4.w);
+
+	return Vector3(v4.x * scale, v4.y * scale, v4.z * scale);
+}
+#pragma endregion
+
+void godot::Mesh4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
+{
+	SurfaceTool *st = memnew(SurfaceTool);
+	st->begin(Mesh::PRIMITIVE_TRIANGLES);
+
+	int vertex_count = 0;
+	//  pinta caras
+	for (const auto &face : faces)
 	{
-		n &= (n - 1);
-		count += 1;
+		// si todos los vertices del cuadrado no estan visibles, se omite la cara
+		if (transformed_vertex[face.v1].w > w_max || transformed_vertex[face.v1].w < w_min ||
+			transformed_vertex[face.v2].w > w_max || transformed_vertex[face.v2].w < w_min ||
+			transformed_vertex[face.v3].w > w_max || transformed_vertex[face.v3].w < w_min)
+			continue;
+
+		// Obtener indices mapeados
+		// Clippear la w
+		// Obtener posiciones para calcular normal
+		Vector3 p1 = v4_to_v3(transformed_vertex[face.v1], orthographic, projection_distance);
+		Vector3 p2 = v4_to_v3(transformed_vertex[face.v2], orthographic, projection_distance);
+		Vector3 p3 = v4_to_v3(transformed_vertex[face.v3], orthographic, projection_distance);
+
+		// Calcular la normal
+		Vector3 normal = (p2 - p1).cross(p3 - p1).normalized();
+
+		// Agregar a la malla su normal y vertices
+		st->set_normal(normal);
+		st->add_vertex(p1);
+		st->add_vertex(p2);
+		st->add_vertex(p3);
+		// Triangulo
+		st->add_index(vertex_count);
+		st->add_index(vertex_count + 1);
+		st->add_index(vertex_count + 2);
+		vertex_count += 3;
 	}
-	return count;
+
+	Ref<ArrayMesh> mesh = st->commit();
+	mesh_instance->set_mesh(mesh);
+}
+
+void godot::Mesh4D::draw_edges(const std::vector<Vector4> &transformed_vertex)
+{
+	SurfaceTool *st = memnew(SurfaceTool);
+	st->begin(Mesh::PRIMITIVE_LINES);
+
+	for (const auto &v : transformed_vertex)
+	{
+		st->add_vertex(v4_to_v3(v, orthographic, projection_distance));
+	}
+
+	// pinta aristas
+	// Crea malla de lineas conectando vertices adyacentes
+	// (en un hipercubo, los vertices adyacentes son aquellos que difieren en exactamente un bit en su indice)
+	{
+		for (int a = 0; a < (int)transformed_vertex.size(); a++)
+		{
+			for (int b = a + 1; b < (int)transformed_vertex.size(); b++)
+			{
+				int diff = a ^ b;
+
+				// Si diff es potencia de 2 (solo 1 bit activo),
+				// los vertices son adyacentes en el hipercubo
+				if (count_set_bits(diff) == 1)
+				{
+					st->add_index(a);
+					st->add_index(b);
+				}
+			}
+		}
+	}
+
+	Ref<ArrayMesh> mesh = st->commit();
+	mesh_instance->set_mesh(mesh);
 }
 
 void Mesh4D::_bind_methods()
@@ -76,6 +165,8 @@ void Mesh4D::_bind_methods()
 	// Visualizacion
 	ClassDB::bind_method(D_METHOD("set_wireframe", "wireframe"), &Mesh4D::set_wireframe);
 	ClassDB::bind_method(D_METHOD("get_wireframe"), &Mesh4D::get_wireframe);
+	ClassDB::bind_method(D_METHOD("set_orthographic", "orthographic"), &Mesh4D::set_orthographic);
+	ClassDB::bind_method(D_METHOD("get_orthographic"), &Mesh4D::get_orthographic);
 	// Rango visible de la dimension W
 	ClassDB::bind_method(D_METHOD("set_w_min", "w_min"), &Mesh4D::set_w_min);
 	ClassDB::bind_method(D_METHOD("get_w_min"), &Mesh4D::get_w_min);
@@ -97,9 +188,11 @@ void Mesh4D::_bind_methods()
 	// Propiedades
 	ADD_GROUP("4D Visual", "see_");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "wireframe", PROPERTY_HINT_RANGE, "0,1,1"), "set_wireframe", "get_wireframe");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "size"), "set_size", "get_size");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "orthographic", PROPERTY_HINT_RANGE, "0,1,1"), "set_orthographic", "get_orthographic");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "w_min"), "set_w_min", "get_w_min");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "w_max"), "set_w_max", "get_w_max");
+	ADD_GROUP("4D Transform", "trans_");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "size"), "set_size", "get_size");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "projection_distance"), "set_projection_distance", "get_projection_distance");
 	// Rotaciones 4D
 	ADD_GROUP("4D Rotation", "rot_");
@@ -250,106 +343,36 @@ void Mesh4D::update_mesh()
 		return;
 
 	float h = size / 2.0f;
-
+	// Vertices transformados
+	std::vector<Vector4> transformed_vertex;
 	// vertices proyectados en 3D
-	std::vector<Vector3> projected;
-	std::vector<int> filtered_indices; // Indices de vertices que pasaron el filtro W
-	std::vector<int> index_mapping;	   // Mapeo de índice original a índice en projected, si no esta visible => -1
-	index_mapping.resize(16, -1);
+	// std::vector<Vector3> projected;
+	// std::vector<int> filtered_indices; // Indices de vertices que pasaron el filtro W
+	// std::vector<int> index_mapping;	   // Mapeo de Indice original a Indice en projected, si no esta visible => -1
+	// index_mapping.resize(16, -1);
+
 	for (const auto &v_org : vertex)
 	{
 		Vector4 v = v_org.position;
-		// Aplica tamanyo
+		// Aplica size
 		v = Vector4(v.x * h, v.y * h, v.z * h, v.w * h);
-
 		// Aplica rotaciones 4D
 		v = rotate4D(v,
 					 rot_xy, rot_xz, rot_xw,
 					 rot_yz, rot_yw, rot_zw);
 
-		// Rango visible de la dimension W
-		if (v.w >= w_min && v.w <= w_max)
-		{
-			float scale = projection_distance / (projection_distance - v.w);
-			projected.push_back(Vector3(v.x * scale, v.y * scale, v.z * scale));
-			filtered_indices.push_back(v_org.index);
-			index_mapping[v_org.index] = filtered_indices.size() - 1;
-		}
+		transformed_vertex.push_back(v);
 	}
 
-	if (projected.empty())
+	if (transformed_vertex.empty())
 	{
 		print_error("[MESH 4D] No hay vertices para mostrar");
 		return;
 	}
 
-	// herramienta para construir la malla a partir de los vertices proyectados
-	SurfaceTool *st = memnew(SurfaceTool);
-	st->begin(show_faces ? Mesh::PRIMITIVE_TRIANGLES : Mesh::PRIMITIVE_LINES);
-
 	// Para cada cuadrado, crear 2 triangulos
-	if (show_faces)
-	{
-		int vertex_count = 0;
-		//  pinta caras
-		for (const auto &face : faces)
-		{
-			// // si todos los vertices del cuadrado no estan visibles, se omite la cara
-			if (index_mapping[face.v1] == -1 || index_mapping[face.v2] == -1 || index_mapping[face.v3] == -1)
-				continue;
-
-			// Obtener indices de los vertices del triangulo en la malla proyectada
-			int idx1 = index_mapping[face.v1];
-			int idx2 = index_mapping[face.v2];
-			int idx3 = index_mapping[face.v3];
-
-			// Obtener posiciones para calcular normal
-			Vector3 p1 = projected[idx1];
-			Vector3 p2 = projected[idx2];
-			Vector3 p3 = projected[idx3];
-
-			// Calcular la normal
-			Vector3 normal = (p2 - p1).cross(p3 - p1).normalized();
-
-			// Agregar a la malla su normal y vertices
-			st->set_normal(normal);
-			st->add_vertex(p1);
-			st->add_vertex(p2);
-			st->add_vertex(p3);
-			// Triangulo
-			st->add_index(vertex_count);
-			st->add_index(vertex_count + 1);
-			st->add_index(vertex_count + 2);
-			vertex_count += 3;
-		}
-	}
+	if (show_edges)
+		draw_edges(transformed_vertex);
 	else
-	{
-		for (const auto &v : projected)
-			st->add_vertex(v);
-
-		// pinta aristas
-		// Crea malla de lineas conectando vertices adyacentes
-		// (en un hipercubo, los vertices adyacentes son aquellos que difieren en exactamente un bit en su indice)
-		{
-			for (int a = 0; a < (int)filtered_indices.size(); a++)
-			{
-				for (int b = a + 1; b < (int)filtered_indices.size(); b++)
-				{
-					int diff = filtered_indices[a] ^ filtered_indices[b];
-
-					// Si diff es potencia de 2 (solo 1 bit activo),
-					// los vertices son adyacentes en el hipercubo
-					if (count_set_bits(diff) == 1)
-					{
-						st->add_index(a);
-						st->add_index(b);
-					}
-				}
-			}
-		}
-	}
-
-	Ref<ArrayMesh> mesh = st->commit();
-	mesh_instance->set_mesh(mesh);
+		draw_faces(transformed_vertex);
 }
