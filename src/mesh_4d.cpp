@@ -1,7 +1,6 @@
 #include "mesh_4d.h"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/memory.hpp>
-#include <cmath>
 #include <cstdint>
 
 #include <godot_cpp/variant/vector4.hpp>
@@ -24,63 +23,16 @@ static int count_set_bits(int n)
 	return count;
 }
 
-static Vector4 rotate4D(Vector4 v,
-						float xy, float xz, float xw,
-						float yz, float yw, float zw)
-{
-
-	float x = v.x, y = v.y, z = v.z, w = v.w;
-	float nx, ny, nz, nw;
-
-	// XY
-	nx = x * cos(xy) - y * sin(xy);
-	ny = x * sin(xy) + y * cos(xy);
-	x = nx;
-	y = ny;
-
-	// XZ
-	nx = x * cos(xz) - z * sin(xz);
-	nz = x * sin(xz) + z * cos(xz);
-	x = nx;
-	z = nz;
-
-	// XW
-	nx = x * cos(xw) - w * sin(xw);
-	nw = x * sin(xw) + w * cos(xw);
-	x = nx;
-	w = nw;
-
-	// YZ
-	ny = y * cos(yz) - z * sin(yz);
-	nz = y * sin(yz) + z * cos(yz);
-	y = ny;
-	z = nz;
-
-	// YW
-	ny = y * cos(yw) - w * sin(yw);
-	nw = y * sin(yw) + w * cos(yw);
-	y = ny;
-	w = nw;
-
-	// ZW
-	nz = z * cos(zw) - w * sin(zw);
-	nw = z * sin(zw) + w * cos(zw);
-	z = nz;
-	w = nw;
-
-	return Vector4(x, y, z, w);
-}
-
-static Vector3 v4_to_v3(const Vector4 &v4, bool orthographic, float projection_distance)
+static Vector3 v4_to_v3(const Vector4 &v4, bool orthographic, float projection_distance, Vector4 p_scale = Vector4(1, 1, 1, 1))
 {
 	Vector3 v3;
 	float scale;
 	if (orthographic)
 		scale = 1;
 	else
-		scale = projection_distance / (projection_distance - v4.w);
+		scale = projection_distance / (projection_distance - (p_scale.w * v4.w));
 
-	return Vector3(v4.x * scale, v4.y * scale, v4.z * scale);
+	return Vector3(v4.x * p_scale.x * scale, v4.y * p_scale.y * scale, v4.z * p_scale.z * scale);
 }
 
 // Interpolar 4D para que W = w_target
@@ -150,11 +102,11 @@ void godot::Mesh4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
 		// Convertir poligono en triangulos, un poligono de N vertices se divide en N-2 triangulos
 		for (size_t i = 1; i < polygon.size() - 1; i++)
 		{
-			// Proyectamos en el mundo 3D los vertices 4D			
-			Vector3 p1 = v4_to_v3(polygon[0], orthographic, projection_distance);
-			Vector3 p2 = v4_to_v3(polygon[i], orthographic, projection_distance);
-			Vector3 p3 = v4_to_v3(polygon[i + 1], orthographic, projection_distance);
-			
+			// Proyectamos en el mundo 3D los vertices 4D
+			Vector3 p1 = v4_to_v3(polygon[0] + position, orthographic, projection_distance, scale);
+			Vector3 p2 = v4_to_v3(polygon[i] + position, orthographic, projection_distance, scale);
+			Vector3 p3 = v4_to_v3(polygon[i + 1] + position, orthographic, projection_distance, scale);
+
 			// Calcular la normal
 			Vector3 normal = (p2 - p1).cross(p3 - p1).normalized();
 
@@ -182,7 +134,7 @@ void godot::Mesh4D::draw_edges(const std::vector<Vector4> &transformed_vertex)
 
 	for (const auto &v : transformed_vertex)
 	{
-		st->add_vertex(v4_to_v3(v, orthographic, projection_distance));
+		st->add_vertex(v4_to_v3(v + position, orthographic, projection_distance, scale));
 	}
 
 	// pinta aristas
@@ -217,44 +169,28 @@ void Mesh4D::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_wireframe"), &Mesh4D::get_wireframe);
 	ClassDB::bind_method(D_METHOD("set_orthographic", "orthographic"), &Mesh4D::set_orthographic);
 	ClassDB::bind_method(D_METHOD("get_orthographic"), &Mesh4D::get_orthographic);
+	// Distancia de proyeccion
+	ClassDB::bind_method(D_METHOD("set_projection_distance", "distance"), &Mesh4D::set_projection_distance);
+	ClassDB::bind_method(D_METHOD("get_projection_distance"), &Mesh4D::get_projection_distance);
+	// Tamanio del lado del cubo
+	ClassDB::bind_method(D_METHOD("set_size", "size"), &Mesh4D::set_size);
+	ClassDB::bind_method(D_METHOD("get_size"), &Mesh4D::get_size);
 	// Rango visible de la dimension W
 	ClassDB::bind_method(D_METHOD("set_w_min", "w_min"), &Mesh4D::set_w_min);
 	ClassDB::bind_method(D_METHOD("get_w_min"), &Mesh4D::get_w_min);
 	ClassDB::bind_method(D_METHOD("set_w_max", "w_max"), &Mesh4D::set_w_max);
 	ClassDB::bind_method(D_METHOD("get_w_max"), &Mesh4D::get_w_max);
-	// distancia de proyeccion
-	ClassDB::bind_method(D_METHOD("set_projection_distance", "distance"), &Mesh4D::set_projection_distance);
-	ClassDB::bind_method(D_METHOD("get_projection_distance"), &Mesh4D::get_projection_distance);
-	// Tamanyo del hipercubo
-	ClassDB::bind_method(D_METHOD("set_size", "size"), &Mesh4D::set_size);
-	ClassDB::bind_method(D_METHOD("get_size"), &Mesh4D::get_size);
-	// Rotaciones 4D
-	ClassDB::bind_method(D_METHOD("set_rot_xw", "v"), &Mesh4D::set_rot_xw);
-	ClassDB::bind_method(D_METHOD("get_rot_xw"), &Mesh4D::get_rot_xw);
-	ClassDB::bind_method(D_METHOD("set_rot_yw", "v"), &Mesh4D::set_rot_yw);
-	ClassDB::bind_method(D_METHOD("get_rot_yw"), &Mesh4D::get_rot_yw);
-	ClassDB::bind_method(D_METHOD("set_rot_zw", "v"), &Mesh4D::set_rot_zw);
-	ClassDB::bind_method(D_METHOD("get_rot_zw"), &Mesh4D::get_rot_zw);
 	// Propiedades
 	ADD_GROUP("4D Visual", "see_");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "wireframe", PROPERTY_HINT_RANGE, "0,1,1"), "set_wireframe", "get_wireframe");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "orthographic", PROPERTY_HINT_RANGE, "0,1,1"), "set_orthographic", "get_orthographic");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "projection_distance"), "set_projection_distance", "get_projection_distance");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "size"), "set_size", "get_size");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "w_min"), "set_w_min", "get_w_min");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "w_max"), "set_w_max", "get_w_max");
-	ADD_GROUP("4D Transform", "trans_");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "size"), "set_size", "get_size");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "projection_distance"), "set_projection_distance", "get_projection_distance");
-	// Rotaciones 4D
-	ADD_GROUP("4D Rotation", "rot_");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rot_xw", PROPERTY_HINT_RANGE, "-6.28,6.28,0.01"), "set_rot_xw", "get_rot_xw");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rot_yw", PROPERTY_HINT_RANGE, "-6.28,6.28,0.01"), "set_rot_yw", "get_rot_yw");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rot_zw", PROPERTY_HINT_RANGE, "-6.28,6.28,0.01"), "set_rot_zw", "get_rot_zw");
 }
 
-Mesh4D::Mesh4D()
-	: size(2.0f), w_min(-1.0f), w_max(1.0f),
-	  rot_xy(0.0f), rot_xz(0.0f), rot_xw(0.0f),
-	  rot_yz(0.0f), rot_yw(0.0f), rot_zw(0.0f)
+Mesh4D::Mesh4D() : w_min(-1.0f), w_max(1.0f), size(2.0f)
 {
 	// Crea MeshInstance3D hijo
 	mesh_instance = memnew(MeshInstance3D);
@@ -407,10 +343,7 @@ void Mesh4D::update_mesh()
 		// Aplica size
 		v = Vector4(v.x * h, v.y * h, v.z * h, v.w * h);
 		// Aplica rotaciones 4D
-		v = rotate4D(v,
-					 rot_xy, rot_xz, rot_xw,
-					 rot_yz, rot_yw, rot_zw);
-
+		v = rotate4D(v, rotation);
 		transformed_vertex.push_back(v);
 	}
 
