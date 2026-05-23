@@ -82,6 +82,47 @@ static Vector3 v4_to_v3(const Vector4 &v4, bool orthographic, float projection_d
 
 	return Vector3(v4.x * scale, v4.y * scale, v4.z * scale);
 }
+
+// Interpolar 4D para que W = w_target
+static Vector4 interp_w(const Vector4 &a, const Vector4 &b, float w_target)
+{
+	float t = (w_target - a.w) / (b.w - a.w);
+	return Vector4(
+		a.x + t * (b.x - a.x),
+		a.y + t * (b.y - a.y),
+		a.z + t * (b.z - a.z),
+		w_target);
+}
+
+// Clip un poligono contra un plano W
+// Si true keep_above, mantiene W >= w_plane; si false, W <= w_plane
+static std::vector<Vector4> clip_polygon_w(const std::vector<Vector4> &polygon, float w_plane, bool keep_above)
+{
+	std::vector<Vector4> result;
+	if (polygon.empty())
+		return result;
+
+	for (size_t i = 0; i < polygon.size(); i++)
+	{
+		Vector4 current = polygon[i];
+		Vector4 next = polygon[(i + 1) % polygon.size()];
+
+		bool curr_in = keep_above ? (current.w >= w_plane) : (current.w <= w_plane);
+		bool next_in = keep_above ? (next.w >= w_plane) : (next.w <= w_plane);
+
+		if (curr_in)
+		{
+			result.push_back(current);
+			if (!next_in)
+				result.push_back(interp_w(current, next, w_plane));
+		}
+		else if (next_in)
+		{
+			result.push_back(interp_w(current, next, w_plane));
+		}
+	}
+	return result;
+}
 #pragma endregion
 
 void godot::Mesh4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
@@ -93,32 +134,41 @@ void godot::Mesh4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
 	//  pinta caras
 	for (const auto &face : faces)
 	{
-		// si todos los vertices del cuadrado no estan visibles, se omite la cara
-		if (transformed_vertex[face.v1].w > w_max || transformed_vertex[face.v1].w < w_min ||
-			transformed_vertex[face.v2].w > w_max || transformed_vertex[face.v2].w < w_min ||
-			transformed_vertex[face.v3].w > w_max || transformed_vertex[face.v3].w < w_min)
+		std::vector<Vector4> polygon = {
+			transformed_vertex[face.v1],
+			transformed_vertex[face.v2],
+			transformed_vertex[face.v3]};
+
+		// Clip contra w_min (mantener W >= w_min)
+		polygon = clip_polygon_w(polygon, w_min, true);
+		// Clip contra w_max (mantener W <= w_max)
+		polygon = clip_polygon_w(polygon, w_max, false);
+		// Si quedan menos de 3 vertices, no hay triangulo que dibujar
+		if (polygon.size() < 3)
 			continue;
 
-		// Obtener indices mapeados
-		// Clippear la w
-		// Obtener posiciones para calcular normal
-		Vector3 p1 = v4_to_v3(transformed_vertex[face.v1], orthographic, projection_distance);
-		Vector3 p2 = v4_to_v3(transformed_vertex[face.v2], orthographic, projection_distance);
-		Vector3 p3 = v4_to_v3(transformed_vertex[face.v3], orthographic, projection_distance);
+		// Convertir poligono en triangulos, un poligono de N vertices se divide en N-2 triangulos
+		for (size_t i = 1; i < polygon.size() - 1; i++)
+		{
+			// Proyectamos en el mundo 3D los vertices 4D			
+			Vector3 p1 = v4_to_v3(polygon[0], orthographic, projection_distance);
+			Vector3 p2 = v4_to_v3(polygon[i], orthographic, projection_distance);
+			Vector3 p3 = v4_to_v3(polygon[i + 1], orthographic, projection_distance);
+			
+			// Calcular la normal
+			Vector3 normal = (p2 - p1).cross(p3 - p1).normalized();
 
-		// Calcular la normal
-		Vector3 normal = (p2 - p1).cross(p3 - p1).normalized();
-
-		// Agregar a la malla su normal y vertices
-		st->set_normal(normal);
-		st->add_vertex(p1);
-		st->add_vertex(p2);
-		st->add_vertex(p3);
-		// Triangulo
-		st->add_index(vertex_count);
-		st->add_index(vertex_count + 1);
-		st->add_index(vertex_count + 2);
-		vertex_count += 3;
+			// Agregar a la malla su normal y vertices
+			st->set_normal(normal);
+			st->add_vertex(p1);
+			st->add_vertex(p2);
+			st->add_vertex(p3);
+			// Triangulo
+			st->add_index(vertex_count);
+			st->add_index(vertex_count + 1);
+			st->add_index(vertex_count + 2);
+			vertex_count += 3;
+		}
 	}
 
 	Ref<ArrayMesh> mesh = st->commit();
