@@ -2,6 +2,8 @@
 
 #include "node_4d.hpp"
 #include "mesh_4d.hpp"
+#include "hypercube.h"
+#include "generic_mesh_4d.h"
 #include "mesh_instance_4d.h"
 
 #include <gdextension_interface.h>
@@ -17,6 +19,8 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_CLASS(Node4D);
 	GDREGISTER_CLASS(Mesh4D);
+	GDREGISTER_CLASS(Hypercube);
+	GDREGISTER_CLASS(GenericMesh4D);
 	GDREGISTER_CLASS(MeshInstance4D);
 }
 
