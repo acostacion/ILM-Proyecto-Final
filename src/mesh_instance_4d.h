@@ -1,40 +1,25 @@
 #pragma once
-#include "node_4d.hpp"
+#include <vector>
 
 #include <godot_cpp/classes/mesh.hpp>
 #include <godot_cpp/variant/vector4.hpp>
-#include <vector>
+
+#include "node_4d.hpp"
+#include "mesh_4d.hpp"
 
 namespace godot
 {
     // fordward declaration
     class MeshInstance3D;
 
-    // Cada vertice tiene un indice unico
-    // Cada vertice es un Vector4 (x, y, z, w)
-    struct vertex
-    {
-        int index;
-        Vector4 position;
-        bool operator==(const vertex &other) const
-        {
-            return position == other.position;
-        }
-    };
-    struct triangle
-    {
-        int v1, v2, v3; // Indices de los vertices que forman el triangulo
-    };
-
     class MeshInstance4D : public Node4D
     {
         GDCLASS(MeshInstance4D, Node4D)
-        std::vector<vertex> vertex;
-        // Cada triangulo es un struct de 3 indices de vertices
-        std::vector<triangle> faces;
 
-        bool show_edges = false; // Mostrar aristas
-        bool show_faces = true;  // Mostrar caras (triangulos)
+        // Vertices de 4 coordenadas
+        std::vector<Vertex> vertices;
+        // Cada triangulo es un struct de 3 indices de vertices
+        std::vector<Triangle> faces;
 
         void draw_faces(const std::vector<Vector4> &transformed_vertex);
         void draw_edges(const std::vector<Vector4> &transformed_vertex);
@@ -42,9 +27,15 @@ namespace godot
     protected:
         static void _bind_methods();
         // Referencia a la mesh que utilizamos
-        Ref<Mesh> mesh = nullptr;
+        Ref<Mesh4D> mesh = nullptr;
         // Usamos un MeshInstance3D como renderer en el mundo 3D
         MeshInstance3D *mesh_instance = nullptr;
+
+        // Mostrar aristas
+        bool show_edges = false;
+        // Mostrar caras (triangulos)
+        bool show_faces = true;
+
         // Rango de w visible
         float w_min = -1.0f, w_max = 1.0f;
         // Distancia de proyeccion
@@ -52,10 +43,6 @@ namespace godot
         // Prespectiva u ortografica en eje w
         bool orthographic = false;
 
-        // genera los vertices de la mesh.
-        void _generate_vertex();
-        // Generar las caras de la mesh.
-        void _generate_faces();
         // Actualizar la malla
         void _update_mesh();
 
@@ -65,14 +52,17 @@ namespace godot
 
         // SETTERS Y GETTERS
         // Mesh
-        void set_mesh(Ref<Mesh> p_mesh)
+        void set_mesh(Ref<Mesh4D> p_mesh)
         {
             mesh = p_mesh;
-            _generate_vertex();
-            _generate_faces();
-            _update_mesh();
+            if (mesh.is_valid())
+            {
+                vertices = mesh->get_vertices();
+                faces = mesh->get_faces();
+                _update_mesh();
+            }
         }
-        Ref<Mesh> get_mesh() { return mesh; }
+        Ref<Mesh4D> get_mesh() { return mesh; }
         // Rango visible en W
         void set_w_min(float p_min)
         {

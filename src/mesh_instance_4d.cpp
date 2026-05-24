@@ -12,18 +12,6 @@
 using namespace godot;
 #pragma region HELPERS
 
-// Brian Kernighan's Algorithm para contar bits activos
-static int count_set_bits(int n)
-{
-    int count = 0;
-    while (n > 0)
-    {
-        n &= (n - 1);
-        count += 1;
-    }
-    return count;
-}
-
 static Vector3 v4_to_v3(const Vector4 &v4, bool orthographic, float projection_distance, Vector4 p_scale = Vector4(1, 1, 1, 1))
 {
     Vector3 v3;
@@ -154,7 +142,7 @@ void MeshInstance4D::draw_edges(const std::vector<Vector4> &transformed_vertex)
 void MeshInstance4D::_bind_methods()
 {
     // Visualizacion
-    ClassDB::bind_method(D_METHOD("set_mesh", "mesh"), &MeshInstance4D::set_mesh);
+    ClassDB::bind_method(D_METHOD("set_mesh", "4d_mesh"), &MeshInstance4D::set_mesh);
     ClassDB::bind_method(D_METHOD("get_mesh"), &MeshInstance4D::get_mesh);
     ClassDB::bind_method(D_METHOD("set_wireframe", "wireframe"), &MeshInstance4D::set_wireframe);
     ClassDB::bind_method(D_METHOD("get_wireframe"), &MeshInstance4D::get_wireframe);
@@ -169,8 +157,10 @@ void MeshInstance4D::_bind_methods()
     ClassDB::bind_method(D_METHOD("set_w_max", "w_max"), &MeshInstance4D::set_w_max);
     ClassDB::bind_method(D_METHOD("get_w_max"), &MeshInstance4D::get_w_max);
     // Propiedades
-    ADD_GROUP("4D Visual", "");    
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh"), "set_mesh", "get_mesh");
+    // ADD_GROUP("4D Visual", "");
+    // Propiedad mesh con pista de que es un Mesh4D
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh4D"),
+                 "set_mesh", "get_mesh");
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "wireframe", PROPERTY_HINT_RANGE, "0,1,1"), "set_wireframe", "get_wireframe");
     ADD_PROPERTY(PropertyInfo(Variant::BOOL, "orthographic", PROPERTY_HINT_RANGE, "0,1,1"), "set_orthographic", "get_orthographic");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "projection_distance"), "set_projection_distance", "get_projection_distance");
@@ -191,55 +181,6 @@ MeshInstance4D::MeshInstance4D() : w_min(-1.0f), w_max(1.0f)
     // mesh_instance->set_material_override(material);
 }
 
-void MeshInstance4D::_generate_vertex()
-{
-    vertex.clear();
-
-    // Validar que la mesh exista y tenga surfaces
-    if (!mesh.is_valid() || mesh->get_surface_count() == 0)
-    {
-        print_error("[MeshInstance4D] Mesh no valida o sin superficies");
-        return;
-    }
-
-    // Obtener los arrays del primer surface
-    Array surface_arrays = mesh->surface_get_arrays(0);
-
-    // ARRAY_VERTEX contiene los vertices como Vector3
-    PackedVector3Array vertices_3d = surface_arrays[Mesh::ARRAY_VERTEX];
-
-    // Convertir cada vertice 3D a 4D (agregando W=0)
-    for (int i = 0; i < vertices_3d.size(); i++)
-    {
-        Vector3 v3 = vertices_3d[i];
-        Vector4 v4(v3.x, v3.y, v3.z, 0.0f); // W=0 por defecto
-        vertex.push_back({i, v4});
-    }
-}
-
-void MeshInstance4D::_generate_faces()
-{
-    faces.clear();
-
-    if (!mesh.is_valid() || mesh->get_surface_count() == 0)
-    {
-        print_error("[MeshInstance4D] Mesh no valida o sin superficies");
-        return;
-    }
-
-    // Obtener los arrays del primer surface
-    Array surface_arrays = mesh->surface_get_arrays(0);
-
-    // ARRAY_INDEX contiene los indices como enteros
-    PackedInt32Array indices = surface_arrays[Mesh::ARRAY_INDEX];
-
-    // Los indices vienen en trio. (i0, i1, i2) forman un triangulo
-    for (int i = 0; i < indices.size(); i += 3)
-    {
-        faces.push_back({indices[i], indices[i + 1], indices[i + 2]});
-    }
-}
-
 void MeshInstance4D::_update_mesh()
 {
     if (!mesh_instance)
@@ -249,7 +190,7 @@ void MeshInstance4D::_update_mesh()
     std::vector<Vector4> transformed_vertex;
 
     // Aplicamos las transformaciones a los vertices
-    for (const auto &v_org : vertex)
+    for (const auto &v_org : vertices)
     {
         Vector4 v = v_org.position;
         // Aplica size
