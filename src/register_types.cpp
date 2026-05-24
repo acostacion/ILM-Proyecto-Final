@@ -1,6 +1,7 @@
 #include "register_types.h"
 
-#include "mesh_4d.h"
+#include "mesh_instance_4d.h"
+#include "node_4d.hpp"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -14,7 +15,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	}
 
 	GDREGISTER_CLASS(Node4D);
-	GDREGISTER_CLASS(Mesh4D);
+	GDREGISTER_CLASS(MeshInstance4D);
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {
