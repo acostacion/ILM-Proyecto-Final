@@ -173,12 +173,13 @@ MeshInstance4D::MeshInstance4D() : w_min(-1.0f), w_max(1.0f)
     // Crea MeshInstance3D hijo
     mesh_instance = memnew(MeshInstance3D);
     add_child(mesh_instance);
-    // Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
-    // material->set_albedo(Color(0.2f, 0.7f, 1.0f, 1.0f)); // Azul
+    Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
+    //material->set_albedo(Color(0.2f, 0.7f, 1.0f, 1.0f)); // Azul
+    material->set_albedo(Color(1.0f, 0.0f, 0.5f, 1.0f)); // morao
     // material->set_shading_mode(BaseMaterial3D::SHADING_MODE_UNSHADED);
     // material->set_cull_mode(BaseMaterial3D::CULL_DISABLED);             // Mostrar ambas caras
     // material->set_shading_mode(BaseMaterial3D::SHADING_MODE_PER_PIXEL); // Iluminacion por pixel
-    // mesh_instance->set_material_override(material);
+    mesh_instance->set_material_override(material);
 }
 
 void MeshInstance4D::_update_mesh()

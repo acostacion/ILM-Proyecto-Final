@@ -1,18 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://cclfddh4ya3n0"]
+[gd_scene load_steps=6 format=3 uid="uid://cclfddh4ya3n0"]
 
 [ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/4DVisualizer.gd" id="1_tubae"]
+[ext_resource type="Texture2D" uid="uid://bnppek3p34kcj" path="res://Sprites/Screenshot01.png" id="2_8n0tl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8n0tl"]
+albedo_texture = ExtResource("2_8n0tl")
+heightmap_scale = 16.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_k4wph"]
 
 [sub_resource type="Hypercube" id="Hypercube_8n0tl"]
 
 [node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox", "_resetButton")]
 script = ExtResource("1_tubae")
 _meshInstance4D = NodePath("Teseracto")
-_sliderXW = NodePath("CanvasLayer/Control/VBoxContainer/XW")
-_sliderYW = NodePath("CanvasLayer/Control/VBoxContainer/YW")
-_sliderZW = NodePath("CanvasLayer/Control/VBoxContainer/ZW")
-_wireframeCheckbox = NodePath("CanvasLayer/Control/VBoxContainer/wireframe")
-_autoRotateCheckbox = NodePath("CanvasLayer/Control/VBoxContainer/autorotate")
-_resetButton = NodePath("CanvasLayer/Control/VBoxContainer/reset")
+_sliderXW = NodePath("CanvasLayer/Control/interactuables/XW")
+_sliderYW = NodePath("CanvasLayer/Control/interactuables/YW")
+_sliderZW = NodePath("CanvasLayer/Control/interactuables/ZW")
+_wireframeCheckbox = NodePath("CanvasLayer/Control/interactuables/wireframe")
+_autoRotateCheckbox = NodePath("CanvasLayer/Control/interactuables/autorotate")
+_resetButton = NodePath("CanvasLayer/Control/interactuables/reset")
+
+[node name="fondo" type="MeshInstance3D" parent="."]
+transform = Transform3D(32, 0, 0, 0, 27.7128, 16, 0, -16, 27.7128, 0, 0, -6.23249)
+material_override = SubResource("StandardMaterial3D_8n0tl")
+mesh = SubResource("QuadMesh_k4wph")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.878)
@@ -31,46 +43,66 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+[node name="interactuables" type="VBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_right = 173.0
 offset_bottom = 265.0
 
-[node name="XW" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="XW" type="HSlider" parent="CanvasLayer/Control/interactuables"]
 layout_mode = 2
 min_value = -1.0
 max_value = 1.0
 step = 0.01
 
-[node name="XWtext" type="Label" parent="CanvasLayer/Control/VBoxContainer/XW"]
-layout_mode = 2
-offset_top = -27.0
-offset_right = 173.0
-offset_bottom = -4.0
-
-[node name="YW" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="YW" type="HSlider" parent="CanvasLayer/Control/interactuables"]
 layout_mode = 2
 min_value = -1.0
 max_value = 1.0
 step = 0.01
 
-[node name="YWtext2" type="Label" parent="CanvasLayer/Control/VBoxContainer/YW"]
-layout_mode = 2
-offset_top = -27.0
-offset_right = 173.0
-offset_bottom = -4.0
-
-[node name="ZW" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="ZW" type="HSlider" parent="CanvasLayer/Control/interactuables"]
 layout_mode = 2
 min_value = -1.0
 max_value = 1.0
 step = 0.01
 
-[node name="wireframe" type="CheckBox" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="wireframe" type="CheckBox" parent="CanvasLayer/Control/interactuables"]
 layout_mode = 2
 
-[node name="autorotate" type="CheckBox" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="autorotate" type="CheckBox" parent="CanvasLayer/Control/interactuables"]
 layout_mode = 2
 
-[node name="reset" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="reset" type="Button" parent="CanvasLayer/Control/interactuables"]
 layout_mode = 2
+
+[node name="labeles" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 178.0
+offset_top = -5.0
+offset_right = 218.0
+offset_bottom = 153.0
+scale = Vector2(1, 0.848258)
+
+[node name="XWtext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "XW rotate"
+
+[node name="YWtext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "YW rotate"
+
+[node name="ZWtext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "ZW rotate"
+
+[node name="wireframetext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "wireframe"
+
+[node name="autorotatetxt" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "auto rotate"
+
+[node name="resetext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "reset transform"

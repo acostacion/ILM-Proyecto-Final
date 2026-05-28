@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://docx53knmsnb7"]
+[gd_scene load_steps=10 format=3 uid="uid://cy5s7h4n77akd"]
 
 [ext_resource type="Shader" uid="uid://bka10msfaalh3" path="res://Shaders/hole.gdshader" id="1_7q7q3"]
 [ext_resource type="PackedScene" uid="uid://c14ldgr78r8nv" path="res://Scenes/main_menu.tscn" id="2_bi5fs"]
