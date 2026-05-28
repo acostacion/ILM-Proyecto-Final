@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://cclfddh4ya3n0"]
+
+[ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/4DVisualizer.gd" id="1_tubae"]
+
+[sub_resource type="Hypercube" id="Hypercube_8n0tl"]
+
+[node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox")]
+script = ExtResource("1_tubae")
+_meshInstance4D = NodePath("Teseracto")
+_sliderXW = NodePath("CanvasLayer/Control/VBoxContainer/XW")
+_sliderYW = NodePath("CanvasLayer/Control/VBoxContainer/YW")
+_sliderZW = NodePath("CanvasLayer/Control/VBoxContainer/ZW")
+_wireframeCheckbox = NodePath("CanvasLayer/Control/VBoxContainer/wireframe")
+_autoRotateCheckbox = NodePath("CanvasLayer/Control/VBoxContainer/autorotate")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.878)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 5)
+
+[node name="Teseracto" type="MeshInstance4D" parent="."]
+mesh = SubResource("Hypercube_8n0tl")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 239.0
+offset_bottom = 265.0
+
+[node name="XW" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="YW" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="ZW" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="wireframe" type="CheckBox" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="autorotate" type="CheckBox" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
