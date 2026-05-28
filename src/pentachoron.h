@@ -9,9 +9,9 @@
 
 namespace godot
 {
-    class Hypercube : public Mesh4D
+    class Pentachoron : public Mesh4D
     {
-        GDCLASS(Hypercube, Mesh4D)
+        GDCLASS(Pentachoron, Mesh4D)
     protected:
         // Size de los lados del hypercube
         Vector4 size = {1, 1, 1, 1};
@@ -23,8 +23,8 @@ namespace godot
         void _generate_faces() override;
 
     public:
-        Hypercube();
-        ~Hypercube() = default;
+        Pentachoron();
+        ~Pentachoron() = default;
 
         // SETTERS Y GETTERS
         void set_size(Vector4 p_size) { size = p_size; }

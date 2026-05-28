@@ -9,11 +9,11 @@ heightmap_scale = 16.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_k4wph"]
 
-[sub_resource type="Hypercube" id="Hypercube_8n0tl"]
+[sub_resource type="Tesseract" id="Tesseract_8n0tl"]
 
 [node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox", "_resetButton")]
 script = ExtResource("1_tubae")
-_meshInstance4D = NodePath("Teseracto")
+_meshInstance4D = NodePath("Pentacoro")
 _sliderXW = NodePath("CanvasLayer/Control/interactuables/XW")
 _sliderYW = NodePath("CanvasLayer/Control/interactuables/YW")
 _sliderZW = NodePath("CanvasLayer/Control/interactuables/ZW")
@@ -32,8 +32,8 @@ transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.87
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 5)
 
-[node name="Teseracto" type="MeshInstance4D" parent="."]
-mesh = SubResource("Hypercube_8n0tl")
+[node name="Pentacoro" type="MeshInstance4D" parent="."]
+mesh = SubResource("Tesseract_8n0tl")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

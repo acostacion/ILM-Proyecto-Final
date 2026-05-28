@@ -1,4 +1,4 @@
-#include "hypercube.h"
+#include "tesseract.h"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/memory.hpp>
 #include <cstdint>
@@ -10,10 +10,10 @@
 
 using namespace godot;
 
-void godot::Hypercube::_bind_methods()
+void godot::Tesseract::_bind_methods()
 {
-    ClassDB::bind_method(D_METHOD("set_size", "size"), &Hypercube::set_size);
-    ClassDB::bind_method(D_METHOD("get_size"), &Hypercube::get_size);
+    ClassDB::bind_method(D_METHOD("set_size", "size"), &Tesseract::set_size);
+    ClassDB::bind_method(D_METHOD("get_size"), &Tesseract::get_size);
     // Propiedades
     ADD_PROPERTY(PropertyInfo(Variant::VECTOR4, "size"), "set_size", "get_size");
 }
@@ -68,7 +68,7 @@ void godot::Hypercube::_bind_methods()
 //	   \   |                     \    |
 //	    \  |                      \   |
 //      (-h,+h,+h,+h) -------------- (+h,+h,+h,+h)
-void godot::Hypercube::_generate_vertices()
+void godot::Tesseract::_generate_vertices()
 {
     for (int i = 0; i < 16; i++)
     {
@@ -85,7 +85,7 @@ void godot::Hypercube::_generate_vertices()
     }
 }
 
-void godot::Hypercube::_generate_faces()
+void godot::Tesseract::_generate_faces()
 {
 
     // Generar los 24 cuadrados del hipercubo 4D
@@ -131,7 +131,7 @@ void godot::Hypercube::_generate_faces()
     }
 }
 
-godot::Hypercube::Hypercube() : size(1, 1, 1, 1)
+godot::Tesseract::Tesseract() : size(1, 1, 1, 1)
 {
     _generate_vertices();
     _generate_faces();
