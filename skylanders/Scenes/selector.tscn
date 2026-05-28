@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://bapyq5vuo07td"]
+
+[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://selector.gd" id="1_22fom"]
+
+[node name="Selector" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_top = 333.0
+offset_right = 1147.0
+offset_bottom = 642.0
+script = ExtResource("1_22fom")
+
+[node name="Botones2" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Pentachoron" type="Button" parent="CenterContainer/Botones2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 55
+text = "	Pentacoro"
+
+[node name="Tesseract" type="Button" parent="CenterContainer/Botones2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 55
+text = "Teseracto"
+
+[connection signal="pressed" from="CenterContainer/Botones2/Pentachoron" to="." method="_on_salir_pressed"]
+[connection signal="pressed" from="CenterContainer/Botones2/Tesseract" to="." method="_on_jugar_pressed"]

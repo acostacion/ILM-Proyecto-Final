@@ -26,7 +26,7 @@ var _initRotXW : float
 var _initRotYZ : float
 var _initRotYW : float
 var _initRotZW : float
-var _initScale : Vector4
+#var _initScale : Vector4
 
 # metodos
 func setXW(rot : float) -> void: _meshInstance4D.rot_xw = rot
@@ -43,7 +43,7 @@ func saveInitialTransform() -> void:
 	_initRotYZ = _meshInstance4D.rot_yz
 	_initRotYW = _meshInstance4D.rot_yw
 	_initRotZW = _meshInstance4D.rot_zw
-	_initScale = _meshInstance4D.scale
+#	_initScale = _meshInstance4D.scale
 	pass
 
 func resetTransform() -> void:
@@ -55,7 +55,7 @@ func resetTransform() -> void:
 	_meshInstance4D.rot_yz = _initRotYZ
 	_meshInstance4D.rot_yw = _initRotYW
 	_meshInstance4D.rot_zw = _initRotZW
-	_meshInstance4D.scale = _initScale
+	#_meshInstance4D.scale = _initScale
 	
 	# pero tb la ui
 	_sliderXW.value = _initRotXW
