@@ -4,7 +4,7 @@
 
 [sub_resource type="Hypercube" id="Hypercube_8n0tl"]
 
-[node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox")]
+[node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox", "_resetButton")]
 script = ExtResource("1_tubae")
 _meshInstance4D = NodePath("Teseracto")
 _sliderXW = NodePath("CanvasLayer/Control/VBoxContainer/XW")
@@ -12,6 +12,7 @@ _sliderYW = NodePath("CanvasLayer/Control/VBoxContainer/YW")
 _sliderZW = NodePath("CanvasLayer/Control/VBoxContainer/ZW")
 _wireframeCheckbox = NodePath("CanvasLayer/Control/VBoxContainer/wireframe")
 _autoRotateCheckbox = NodePath("CanvasLayer/Control/VBoxContainer/autorotate")
+_resetButton = NodePath("CanvasLayer/Control/VBoxContainer/reset")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.878)
@@ -32,20 +33,44 @@ offset_bottom = 40.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 0
-offset_right = 239.0
+offset_right = 173.0
 offset_bottom = 265.0
 
 [node name="XW" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="XWtext" type="Label" parent="CanvasLayer/Control/VBoxContainer/XW"]
+layout_mode = 2
+offset_top = -27.0
+offset_right = 173.0
+offset_bottom = -4.0
 
 [node name="YW" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="YWtext2" type="Label" parent="CanvasLayer/Control/VBoxContainer/YW"]
+layout_mode = 2
+offset_top = -27.0
+offset_right = 173.0
+offset_bottom = -4.0
 
 [node name="ZW" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
 
 [node name="wireframe" type="CheckBox" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 
 [node name="autorotate" type="CheckBox" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="reset" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
