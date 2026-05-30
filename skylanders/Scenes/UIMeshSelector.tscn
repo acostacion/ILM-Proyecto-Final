@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bapyq5vuo07td"]
+[gd_scene load_steps=2 format=3 uid="uid://cxbsht44nnpbk"]
 
-[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/UIMeshSelector.gd" id="1_22fom"]
+[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/UIMeshSelector.gd" id="1_3hi7g"]
 
 [node name="Selector" type="Control"]
 layout_mode = 3
@@ -15,7 +15,7 @@ layout_mode = 0
 offset_top = 333.0
 offset_right = 1147.0
 offset_bottom = 642.0
-script = ExtResource("1_22fom")
+script = ExtResource("1_3hi7g")
 
 [node name="Botones2" type="HBoxContainer" parent="CenterContainer"]
 layout_mode = 2
