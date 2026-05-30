@@ -61,7 +61,7 @@ void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
 
     // Limpiar cache de proyeccion
     projected_points.clear();
-    
+
     int vertex_count = 0;
     //  pinta caras
     for (const auto &face : mesh->get_faces())
@@ -181,14 +181,14 @@ void MeshInstance4D::_update_mesh()
         return;
     if (!mesh.is_valid())
     {
-        print_error("[MeshInstance4D] Mesh no asignado");
+        //print_error("[MeshInstance4D] Mesh no asignado");
         mesh_instance->set_mesh(nullptr); // Limpiar visualizacion
         return;
     }
 
     if (mesh->get_vertices().empty() || mesh->get_faces().empty())
     {
-        print_error("[MeshInstance4D] Vertices o faces vacíos");
+        //print_error("[MeshInstance4D] Vertices o faces vacíos");
         mesh_instance->set_mesh(nullptr);
         return;
     }
@@ -199,14 +199,9 @@ void MeshInstance4D::_update_mesh()
     for (const auto &v_org : mesh->get_vertices())
     {
         Vector4 v = v_org.position;
-        // Aplica size
-        v += position;
         // Aplica rotaciones 4D
         v = rotate4D(v, rotation);
         transformed_vertex.push_back(v);
-
-        // Guardar el punto proyectado 
-        Vector3 v3 = v4_to_v3(v + position, orthographic, projection_distance, scale);
     }
 
     if (transformed_vertex.empty())

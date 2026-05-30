@@ -7,6 +7,7 @@
 #include "generic_mesh_4d.h"
 #include "mesh_instance_4d.h"
 #include "collision_shape_4d.h"
+#include "rigid_body_4d.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -26,6 +27,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(GenericMesh4D);
 	GDREGISTER_CLASS(MeshInstance4D);
 	GDREGISTER_CLASS(CollisionShape4D);
+	GDREGISTER_CLASS(RigidBody4D);
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

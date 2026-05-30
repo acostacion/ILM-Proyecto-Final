@@ -59,6 +59,7 @@ void godot::CollisionShape4D::_process(double delta)
 
     PackedVector3Array unique_points;
 
+    print_verbose("[CollisionShape4D] recibidos: " + String::num(points.size()));
     for (int i = 0; i < points.size(); i++)
     {
         Vector3 p = points.get(i);
@@ -76,6 +77,7 @@ void godot::CollisionShape4D::_process(double delta)
             unique_points.append(p);
         }
     }
+    print_verbose("[CollisionShape4D] unicos: " + String::num(unique_points.size()));
 
     if (unique_points.size() >= 4)
         shape->set_points(unique_points);
