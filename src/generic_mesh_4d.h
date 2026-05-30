@@ -30,30 +30,27 @@ namespace godot
         // SETTERS Y GETTERS
         void set_mesh(Ref<Mesh> p_mesh)
         {
-            // Si es PrimitiveMesh, obtener su ArrayMesh
-            if (p_mesh->get_class() == StringName("PrimitiveMesh"))
+            print_verbose("[GENERIC] set_mesh() INICIO");
+
+            if (!p_mesh.is_valid())
             {
-                Ref<PrimitiveMesh> prim = p_mesh;
-                Ref<ArrayMesh> arr_mesh = memnew(ArrayMesh);
-                // Crear surface desde los datos de la primitiva
-                arr_mesh->add_surface_from_arrays(
-                    Mesh::PRIMITIVE_TRIANGLES,
-                    prim->surface_get_arrays(0)
-                );
-                mesh = arr_mesh;
+                print_verbose("[GENERIC] mesh es nullptr");
+                mesh = Ref<Mesh>(); // ← Cambiar nullptr por Ref<Mesh>()
+                vertices.clear();
+                faces.clear();
+                return;
             }
-            else
-            {
-                mesh = p_mesh;
-            }
-            
-            if (mesh.is_valid())
-            {
-                _generate_vertices();
-                _generate_faces();
-            }
+
+            mesh = p_mesh;
+            _generate_vertices();
+            _generate_faces();
+
+            print_verbose("[GENERIC] set_mesh() FIN");
         }
-        Ref<Mesh> get_mesh() { return mesh; }
+        Ref<Mesh> get_mesh() const
+        {
+            return mesh;
+        }
     };
 
 } // namespace godot

@@ -1,4 +1,5 @@
 #include "mesh_instance_4d.h"
+
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/memory.hpp>
 #include <cstdint>
@@ -73,7 +74,7 @@ void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
 
     int vertex_count = 0;
     //  pinta caras
-    for (const auto &face : faces)
+    for (const auto &face : mesh->get_faces())
     {
         std::vector<Vector4> polygon = {
             transformed_vertex[face.v1],
@@ -123,9 +124,9 @@ void MeshInstance4D::draw_edges(const std::vector<Vector4> &transformed_vertex)
 
     for (const auto &v : transformed_vertex)
         st->add_vertex(v4_to_v3(v + position, orthographic, projection_distance, scale));
-
+    
     // Conectar segun los indices originales
-    for (const auto &face : faces)
+    for (const auto &face : mesh->get_faces())
     {
         st->add_index(face.v1);
         st->add_index(face.v2);
@@ -174,7 +175,6 @@ MeshInstance4D::MeshInstance4D() : w_min(-1.0f), w_max(1.0f)
     mesh_instance = memnew(MeshInstance3D);
     add_child(mesh_instance);
     Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
-    //material->set_albedo(Color(0.2f, 0.7f, 1.0f, 1.0f)); // Azul
     material->set_albedo(Color(1.0f, 0.0f, 0.5f, 1.0f)); // morao
     // material->set_shading_mode(BaseMaterial3D::SHADING_MODE_UNSHADED);
     // material->set_cull_mode(BaseMaterial3D::CULL_DISABLED);             // Mostrar ambas caras
@@ -186,12 +186,25 @@ void MeshInstance4D::_update_mesh()
 {
     if (!mesh_instance)
         return;
+    if (!mesh.is_valid())
+    {
+        print_error("[MeshInstance4D] Mesh no asignado");
+        mesh_instance->set_mesh(nullptr); // Limpiar visualizacion
+        return;
+    }
+    
+    if (mesh->get_vertices().empty() || mesh->get_faces().empty())
+    {
+        print_error("[MeshInstance4D] Vertices o faces vacíos");
+        mesh_instance->set_mesh(nullptr);
+        return;
+    }
 
     // Vertices transformados
     std::vector<Vector4> transformed_vertex;
 
     // Aplicamos las transformaciones a los vertices
-    for (const auto &v_org : vertices)
+    for (const auto &v_org : mesh->get_vertices())
     {
         Vector4 v = v_org.position;
         // Aplica size

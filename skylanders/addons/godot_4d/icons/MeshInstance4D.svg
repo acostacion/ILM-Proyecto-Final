@@ -1,0 +1,8 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="14" height="14">
+	<defs>
+		<image  width="14" height="14" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAAAXNSR0IB2cksfwAAAH5QTFRF/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8/wD8JdCTxwAAACp0Uk5TUdfuTgDWT+j/497bQBZIP/7iGRsV/Rzd1RLQEBfZ1BjYV1ZV5enmW/xZdB5PigAAAIlJREFUeJxNz1ELgjAUBeB7ugObKJUPEgVBkPX//06PFZT4YIU0jTm6Q42dp/Nt47ILgoR87IyBaOhDgNgFZCSWqEuM9PhLEZSaw3Srt1iR9WTjWD8npnWG1xLVdNvQou0zlH/SGlX+acbHMmaLR8/C/Z02F7Fu2R8ebsE3NIprwB1OOCs3rnDED5i/KNMXDUDrAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+	</style>
+	<use id="-e-MeshInstance3D" href="#img1" x="0" y="0"/>
+</svg>

@@ -16,10 +16,10 @@ namespace godot
     {
         GDCLASS(MeshInstance4D, Node4D)
 
-        // Vertices de 4 coordenadas
-        std::vector<Vertex> vertices;
-        // Cada triangulo es un struct de 3 indices de vertices
-        std::vector<Triangle> faces;
+        // // Vertices de 4 coordenadas
+        // std::vector<Vertex> vertices;
+        // // Cada triangulo es un struct de 3 indices de vertices
+        // std::vector<Triangle> faces;
 
         void draw_faces(const std::vector<Vector4> &transformed_vertex);
         void draw_edges(const std::vector<Vector4> &transformed_vertex);
@@ -56,11 +56,7 @@ namespace godot
         {
             mesh = p_mesh;
             if (mesh.is_valid())
-            {
-                vertices = mesh->get_vertices();
-                faces = mesh->get_faces();
                 _update_mesh();
-            }
         }
         Ref<Mesh4D> get_mesh() { return mesh; }
         // Rango visible en W
