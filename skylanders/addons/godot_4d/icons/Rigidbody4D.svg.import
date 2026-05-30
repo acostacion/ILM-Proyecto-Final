@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6r5m1unkmmpt"
-path="res://.godot/imported/Node4D.svg-ebab3aecddbb719259b7edcc0da48a64.ctex"
+uid="uid://scp2dnjndyf4"
+path="res://.godot/imported/Rigidbody4D.svg-60db3299abeeae8d129df2354eb2b5a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_4d/icons/Node4D.svg"
-dest_files=["res://.godot/imported/Node4D.svg-ebab3aecddbb719259b7edcc0da48a64.ctex"]
+source_file="res://addons/godot_4d/icons/Rigidbody4D.svg"
+dest_files=["res://.godot/imported/Rigidbody4D.svg-60db3299abeeae8d129df2354eb2b5a5.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6r5m1unkmmpt"
-path="res://.godot/imported/Node4D.svg-ebab3aecddbb719259b7edcc0da48a64.ctex"
+uid="uid://bn6hjuwidr7c4"
+path="res://.godot/imported/CollisionShape4D.svg-8709e5399e9a6f9a37f48b56213a46df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_4d/icons/Node4D.svg"
-dest_files=["res://.godot/imported/Node4D.svg-ebab3aecddbb719259b7edcc0da48a64.ctex"]
+source_file="res://addons/godot_4d/icons/CollisionShape4D.svg"
+dest_files=["res://.godot/imported/CollisionShape4D.svg-8709e5399e9a6f9a37f48b56213a46df.ctex"]
 
 [params]
 
