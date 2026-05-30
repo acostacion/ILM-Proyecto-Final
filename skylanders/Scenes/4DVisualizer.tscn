@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cclfddh4ya3n0"]
+[gd_scene load_steps=10 format=3 uid="uid://cclfddh4ya3n0"]
 
 [ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/UI4DControlPannelVisualizer.gd" id="1_tubae"]
 [ext_resource type="Texture2D" uid="uid://bnppek3p34kcj" path="res://Sprites/Screenshot01.png" id="2_8n0tl"]
 [ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/UIMeshSelector.gd" id="3_k4wph"]
+[ext_resource type="Script" uid="uid://cvnrq3gxpn2t2" path="res://Scripts/RotatingBlock.gd" id="3_qjt2q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8n0tl"]
 albedo_texture = ExtResource("2_8n0tl")
@@ -18,7 +19,7 @@ heightmap_scale = 16.0
 
 [node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox", "_resetButton")]
 script = ExtResource("1_tubae")
-_meshInstance4D = NodePath("4DMesh")
+_meshInstance4D = NodePath("Pentacoro")
 _sliderXW = NodePath("CanvasLayer/Control/interactuables/XW")
 _sliderYW = NodePath("CanvasLayer/Control/interactuables/YW")
 _sliderZW = NodePath("CanvasLayer/Control/interactuables/ZW")
@@ -37,9 +38,10 @@ transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.87
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 5)
 
-[node name="4DMesh" type="MeshInstance4D" parent="."]
+[node name="Pentacoro" type="MeshInstance4D" parent="."]
 mesh = SubResource("Pentachoron_k4wph")
 scale = Vector4(3, 3, 3, 3)
+script = ExtResource("3_qjt2q")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -55,7 +57,7 @@ offset_top = 540.0
 offset_right = 1147.0
 offset_bottom = 642.0
 script = ExtResource("3_k4wph")
-_meshInstance4D = NodePath("../../../4DMesh")
+_meshInstance4D = NodePath("../../../Pentacoro")
 _tesseract = SubResource("Tesseract_qjt2q")
 _pentachoron = SubResource("Pentachoron_yqb44")
 _tesseractButton = NodePath("Botones2/Tesseract")

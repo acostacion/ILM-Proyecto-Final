@@ -7,21 +7,17 @@ extends Node
 @export var _tesseractButton : Button
 @export var _pentachoronButton : Button
 
-<<<<<<<< HEAD:skylanders/Scripts/MeshSelectorUI.gd
-func setTesseract() -> void: _meshInstance4D.mesh = _tesseract
-	
-func setPentachoron() -> void: _meshInstance4D.mesh = _pentachoron
-========
 var _initScale : Vector4
 
 func setTesseract() -> void: 
 	_meshInstance4D.mesh = _tesseract
 	_meshInstance4D.scale = _initScale / 4.0
+	pass
 	
 func setPentachoron() -> void: 
 	_meshInstance4D.mesh = _pentachoron
 	_meshInstance4D.scale = _initScale
->>>>>>>> k-ha-pasado:skylanders/Scripts/UIMeshSelector.gd
+	pass
 
 func _ready() -> void:
 	_initScale = _meshInstance4D.scale
