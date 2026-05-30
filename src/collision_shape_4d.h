@@ -18,7 +18,7 @@ namespace godot
         static void _bind_methods();
 
     public:
-        CollisionShape4D();
+        CollisionShape4D() = default;
         ~CollisionShape4D() = default;
 
         void _ready() override;

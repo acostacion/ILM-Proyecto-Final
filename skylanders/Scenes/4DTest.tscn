@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://beortgxi00qq6"]
+[gd_scene load_steps=5 format=3 uid="uid://beortgxi00qq6"]
 
-[sub_resource type="Tesseract" id="Tesseract_nwbr4"]
+[ext_resource type="Script" uid="uid://cqrikv0cl17ua" path="res://Scripts/drag_and_drop.gd" id="1_4g608"]
+
+[sub_resource type="Tesseract" id="Tesseract_4g608"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nwbr4"]
 size = Vector3(26.4067, 1, 26.3251)
@@ -9,14 +11,12 @@ size = Vector3(26.4067, 1, 26.3251)
 
 [node name="4dTest" type="Node3D"]
 
-[node name="RigidBody" type="RigidBody3D" parent="."]
+[node name="RigidBody" type="RigidBody4D" parent="."]
 
 [node name="CollisionShape4D" type="CollisionShape4D" parent="RigidBody"]
 
 [node name="MeshInstance4D" type="MeshInstance4D" parent="RigidBody"]
-mesh = SubResource("Tesseract_nwbr4")
-rot_xw = 1.89
-rot_yw = 9.78
+mesh = SubResource("Tesseract_4g608")
 scale = Vector4(1, 1, 1, 0)
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
@@ -35,6 +35,7 @@ mesh = SubResource("BoxMesh_nwbr4")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.4773)
+script = ExtResource("1_4g608")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.322018, 0.946734, 0, -0.946734, 0.322018, 0, 0, 0)
