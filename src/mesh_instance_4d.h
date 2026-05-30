@@ -43,6 +43,9 @@ namespace godot
         // Prespectiva u ortografica en eje w
         bool orthographic = false;
 
+        // Cache de la última proyección
+        PackedVector3Array projected_points;
+
         // Actualizar la malla
         void _update_mesh();
 
@@ -59,6 +62,10 @@ namespace godot
                 _update_mesh();
         }
         Ref<Mesh4D> get_mesh() { return mesh; }
+        const PackedVector3Array &get_projected_points() const
+        {
+            return projected_points;
+        }
         // Rango visible en W
         void set_w_min(float p_min)
         {

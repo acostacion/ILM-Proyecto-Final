@@ -12,19 +12,6 @@
 
 using namespace godot;
 #pragma region HELPERS
-
-static Vector3 v4_to_v3(const Vector4 &v4, bool orthographic, float projection_distance, Vector4 p_scale = Vector4(1, 1, 1, 1))
-{
-    Vector3 v3;
-    float scale;
-    if (orthographic)
-        scale = 1;
-    else
-        scale = projection_distance / (projection_distance - (p_scale.w * v4.w));
-
-    return Vector3(v4.x * p_scale.x * scale, v4.y * p_scale.y * scale, v4.z * p_scale.z * scale);
-}
-
 // Interpolar 4D para que W = w_target
 static Vector4 interp_w(const Vector4 &a, const Vector4 &b, float w_target)
 {
@@ -72,6 +59,9 @@ void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
     SurfaceTool *st = memnew(SurfaceTool);
     st->begin(Mesh::PRIMITIVE_TRIANGLES);
 
+    // Limpiar cache de proyeccion
+    projected_points.clear();
+    
     int vertex_count = 0;
     //  pinta caras
     for (const auto &face : mesh->get_faces())
@@ -100,6 +90,9 @@ void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
             // Calcular la normal
             Vector3 normal = (p2 - p1).cross(p3 - p1).normalized();
 
+            projected_points.append(p1);
+            projected_points.append(p2);
+            projected_points.append(p3);
             // Agregar a la malla su normal y vertices
             st->set_normal(normal);
             st->add_vertex(p1);
@@ -124,7 +117,7 @@ void MeshInstance4D::draw_edges(const std::vector<Vector4> &transformed_vertex)
 
     for (const auto &v : transformed_vertex)
         st->add_vertex(v4_to_v3(v + position, orthographic, projection_distance, scale));
-    
+
     // Conectar segun los indices originales
     for (const auto &face : mesh->get_faces())
     {
@@ -192,7 +185,7 @@ void MeshInstance4D::_update_mesh()
         mesh_instance->set_mesh(nullptr); // Limpiar visualizacion
         return;
     }
-    
+
     if (mesh->get_vertices().empty() || mesh->get_faces().empty())
     {
         print_error("[MeshInstance4D] Vertices o faces vacíos");
@@ -202,7 +195,6 @@ void MeshInstance4D::_update_mesh()
 
     // Vertices transformados
     std::vector<Vector4> transformed_vertex;
-
     // Aplicamos las transformaciones a los vertices
     for (const auto &v_org : mesh->get_vertices())
     {
@@ -212,6 +204,9 @@ void MeshInstance4D::_update_mesh()
         // Aplica rotaciones 4D
         v = rotate4D(v, rotation);
         transformed_vertex.push_back(v);
+
+        // Guardar el punto proyectado 
+        Vector3 v3 = v4_to_v3(v + position, orthographic, projection_distance, scale);
     }
 
     if (transformed_vertex.empty())

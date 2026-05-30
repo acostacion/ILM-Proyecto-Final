@@ -49,6 +49,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("_meshInstance4D", "_tesseractButton", "_pentachoronButton")]
+layout_mode = 0
 offset_top = 540.0
 offset_right = 1147.0
 offset_bottom = 642.0

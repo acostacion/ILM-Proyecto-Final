@@ -6,7 +6,7 @@ void GenericMesh4D::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("set_mesh", "mesh"), &GenericMesh4D::set_mesh);
     ClassDB::bind_method(D_METHOD("get_mesh"), &GenericMesh4D::get_mesh);    
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh"), "set_mesh", "get_mesh");
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "mesh", PROPERTY_HINT_RESOURCE_TYPE, "Mesh4D"), "set_mesh", "get_mesh");
 }
 
 void GenericMesh4D::_generate_vertices()

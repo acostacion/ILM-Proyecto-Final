@@ -18,6 +18,18 @@ namespace godot
         return count;
     }
 
+    static Vector3 v4_to_v3(const Vector4 &v4, bool orthographic, float projection_distance, Vector4 p_scale = Vector4(1, 1, 1, 1))
+    {
+        Vector3 v3;
+        float scale;
+        if (orthographic)
+            scale = 1;
+        else
+            scale = projection_distance / (projection_distance - (p_scale.w * v4.w));
+
+        return Vector3(v4.x * p_scale.x * scale, v4.y * p_scale.y * scale, v4.z * p_scale.z * scale);
+    }
+
     // Cada vertice tiene un indice unico
     // Cada vertice es un Vector4 (x, y, z, w)
     struct Vertex

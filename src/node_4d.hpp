@@ -1,7 +1,7 @@
 #pragma once
 
 #include <godot_cpp/core/defs.hpp>
-#include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/variant/vector4.hpp>
 #include <cmath>
 
@@ -58,9 +58,9 @@ namespace godot
 
         return Vector4(x, y, z, w);
     }
-    class Node4D : public Node
+    class Node4D : public Node3D
     {
-        GDCLASS(Node4D, Node);
+        GDCLASS(Node4D, Node3D);
 
     private:
     protected:

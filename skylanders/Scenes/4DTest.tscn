@@ -1,15 +1,40 @@
-[gd_scene format=3 uid="uid://beortgxi00qq6"]
+[gd_scene load_steps=4 format=3 uid="uid://beortgxi00qq6"]
+
+[sub_resource type="Tesseract" id="Tesseract_nwbr4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nwbr4"]
+size = Vector3(26.4067, 1, 26.3251)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nwbr4"]
 
 [node name="4dTest" type="Node3D"]
 
-[node name="Mesh4D" type="Mesh4D" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-script = null
+[node name="RigidBody" type="RigidBody3D" parent="."]
+
+[node name="CollisionShape4D" type="CollisionShape4D" parent="RigidBody"]
+
+[node name="MeshInstance4D" type="MeshInstance4D" parent="RigidBody"]
+mesh = SubResource("Tesseract_nwbr4")
+rot_xw = 1.89
+rot_yw = 9.78
+scale = Vector4(1, 1, 1, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.34593, 0)
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00228882, 0, 0.0282593)
+shape = SubResource("BoxShape3D_nwbr4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(26.1093, 0, 0, 0, 1, 0, 0, 0, 26.1093, 0, 0, 0)
+mesh = SubResource("BoxMesh_nwbr4")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.4773)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.322018, 0.946734, 0, -0.946734, 0.322018, 0, 0, 0)
