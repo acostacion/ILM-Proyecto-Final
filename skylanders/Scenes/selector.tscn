@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bapyq5vuo07td"]
 
-[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://selector.gd" id="1_22fom"]
+[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/UIMeshSelector.gd" id="1_22fom"]
 
 [node name="Selector" type="Control"]
 layout_mode = 3
