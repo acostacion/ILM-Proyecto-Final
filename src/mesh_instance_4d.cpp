@@ -105,13 +105,26 @@ void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
             vertex_count += 3;
         }
     }
-
+    
+    if (vertex_count == 0)
+    { 
+        mesh_instance->set_mesh(Ref<Mesh>());  // Mesh vacío, no nullptr crudo
+        memdelete(st);
+        return;
+    }
+    
     Ref<ArrayMesh> mesh = st->commit();
     mesh_instance->set_mesh(mesh);
 }
 
 void MeshInstance4D::draw_edges(const std::vector<Vector4> &transformed_vertex)
 {
+    if (transformed_vertex.empty())
+    {
+        mesh_instance->set_mesh(Ref<Mesh>());
+        return;
+    }
+
     SurfaceTool *st = memnew(SurfaceTool);
     st->begin(Mesh::PRIMITIVE_LINES);
 
@@ -181,14 +194,14 @@ void MeshInstance4D::_update_mesh()
         return;
     if (!mesh.is_valid())
     {
-        //print_error("[MeshInstance4D] Mesh no asignado");
+        // print_error("[MeshInstance4D] Mesh no asignado");
         mesh_instance->set_mesh(nullptr); // Limpiar visualizacion
         return;
     }
 
     if (mesh->get_vertices().empty() || mesh->get_faces().empty())
     {
-        //print_error("[MeshInstance4D] Vertices o faces vacíos");
+        // print_error("[MeshInstance4D] Vertices o faces vacíos");
         mesh_instance->set_mesh(nullptr);
         return;
     }
