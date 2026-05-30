@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cclfddh4ya3n0"]
+[gd_scene load_steps=10 format=3 uid="uid://cclfddh4ya3n0"]
 
-[ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/4DVisualizer.gd" id="1_tubae"]
+[ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/4DVisualizerControlPannel.gd" id="1_tubae"]
 [ext_resource type="Texture2D" uid="uid://bnppek3p34kcj" path="res://Sprites/Screenshot01.png" id="2_8n0tl"]
-[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://selector.gd" id="3_k4wph"]
+[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/MeshSelectorUI.gd" id="3_k4wph"]
+[ext_resource type="Script" uid="uid://cvnrq3gxpn2t2" path="res://Scripts/RotatingBlock.gd" id="3_qjt2q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8n0tl"]
 albedo_texture = ExtResource("2_8n0tl")
@@ -39,6 +40,7 @@ transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 5)
 
 [node name="Pentacoro" type="MeshInstance4D" parent="."]
 mesh = SubResource("Tesseract_8n0tl")
+script = ExtResource("3_qjt2q")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
