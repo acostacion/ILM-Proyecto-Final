@@ -43,7 +43,7 @@ namespace godot
         // Prespectiva u ortografica en eje w
         bool orthographic = false;
 
-        // Cache de la ultima proyeccion
+        // Cache de la última proyección
         PackedVector3Array projected_points;
 
         // Actualizar la malla
