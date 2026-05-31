@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cclfddh4ya3n0"]
+[gd_scene load_steps=14 format=3 uid="uid://cclfddh4ya3n0"]
 
 [ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/UI4DControlPannelVisualizer.gd" id="1_tubae"]
 [ext_resource type="Texture2D" uid="uid://bnppek3p34kcj" path="res://Sprites/Screenshot01.png" id="2_8n0tl"]
@@ -21,6 +21,10 @@ heightmap_scale = 16.0
 
 [sub_resource type="Icositetrachoron" id="Icositetrachoron_yqb44"]
 
+[sub_resource type="Hexacosichoron" id="Hexacosichoron_qjt2q"]
+
+[sub_resource type="GrandHexacosichoron" id="GrandHexacosichoron_yqb44"]
+
 [node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox", "_resetButton")]
 script = ExtResource("1_tubae")
 _meshInstance4D = NodePath("Pentacoro")
@@ -40,7 +44,7 @@ mesh = SubResource("QuadMesh_k4wph")
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.878)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 5)
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.9058, 4.62964)
 
 [node name="Pentacoro" type="MeshInstance4D" parent="."]
 mesh = SubResource("Pentachoron_qjt2q")
@@ -55,12 +59,12 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("_meshInstance4D", "_tesseractButton", "_pentachoronButton", "_hexadecachoronButton", "_icositetrachoronButton")]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("_meshInstance4D", "_tesseractButton", "_pentachoronButton", "_hexadecachoronButton", "_icositetrachoronButton", "_hexacosichoronButton", "_grandHexacosichoronButton")]
 layout_mode = 0
-offset_left = 50.0
-offset_top = 540.0
-offset_right = 1381.0
-offset_bottom = 624.0
+offset_left = 6.0
+offset_top = 503.0
+offset_right = 1437.0
+offset_bottom = 675.0
 scale = Vector2(0.795, 0.795)
 script = ExtResource("3_k4wph")
 _meshInstance4D = NodePath("../../../Pentacoro")
@@ -68,33 +72,53 @@ _tesseract = SubResource("Tesseract_qjt2q")
 _pentachoron = SubResource("Pentachoron_yqb44")
 _hexadecachoron = SubResource("Hexadecachoron_qjt2q")
 _icositetrachoron = SubResource("Icositetrachoron_yqb44")
-_tesseractButton = NodePath("Botones/Tesseract")
-_pentachoronButton = NodePath("Botones/Pentachoron")
-_hexadecachoronButton = NodePath("Botones/Hexadecachoron")
-_icositetrachoronButton = NodePath("Botones/Icositetrachoron")
+_hexacosichoron = SubResource("Hexacosichoron_qjt2q")
+_grandHexacosichoron = SubResource("GrandHexacosichoron_yqb44")
+_tesseractButton = NodePath("Contenedor vertical/Botones/Tesseract")
+_pentachoronButton = NodePath("Contenedor vertical/Botones/Pentachoron")
+_hexadecachoronButton = NodePath("Contenedor vertical/Botones/Hexadecachoron")
+_icositetrachoronButton = NodePath("Contenedor vertical/Botones2/Icositetrachoron2")
+_hexacosichoronButton = NodePath("Contenedor vertical/Botones2/Hexacosichoron")
+_grandHexacosichoronButton = NodePath("Contenedor vertical/Botones2/Grand Hexacosichoron")
 
-[node name="Botones" type="HBoxContainer" parent="CanvasLayer/Control/CenterContainer"]
+[node name="Contenedor vertical" type="VBoxContainer" parent="CanvasLayer/Control/CenterContainer"]
 layout_mode = 2
 
-[node name="Pentachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Botones"]
+[node name="Botones" type="HBoxContainer" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical"]
+layout_mode = 2
+
+[node name="Pentachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "	Pentacoro"
 
-[node name="Tesseract" type="Button" parent="CanvasLayer/Control/CenterContainer/Botones"]
+[node name="Tesseract" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "Teseracto"
 
-[node name="Hexadecachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Botones"]
+[node name="Hexadecachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "Hexadecacoro"
 
-[node name="Icositetrachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Botones"]
+[node name="Botones2" type="HBoxContainer" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical"]
+layout_mode = 2
+
+[node name="Icositetrachoron2" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "Icositetracoro"
+
+[node name="Hexacosichoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 55
+text = "Hexacosicoro"
+
+[node name="Grand Hexacosichoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 55
+text = "Gran Hexacosicoro"
 
 [node name="interactuables" type="VBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 0
