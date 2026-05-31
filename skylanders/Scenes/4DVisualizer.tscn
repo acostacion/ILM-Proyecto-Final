@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://cclfddh4ya3n0"]
+[gd_scene load_steps=15 format=3 uid="uid://cclfddh4ya3n0"]
 
-[ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/UI4DControlPannelVisualizer.gd" id="1_tubae"]
+[ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/VisualizerScene/UI4DControlPannelVisualizer.gd" id="1_tubae"]
 [ext_resource type="Texture2D" uid="uid://bnppek3p34kcj" path="res://Sprites/Screenshot01.png" id="2_8n0tl"]
-[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/UIMeshSelector.gd" id="3_k4wph"]
-[ext_resource type="Script" uid="uid://cvnrq3gxpn2t2" path="res://Scripts/RotatingBlock.gd" id="3_qjt2q"]
+[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/VisualizerScene/UIMeshSelector.gd" id="3_k4wph"]
+[ext_resource type="Script" uid="uid://cvnrq3gxpn2t2" path="res://Scripts/VisualizerScene/RotatingPolychoron.gd" id="3_qjt2q"]
+[ext_resource type="Script" uid="uid://ces8wr67ufjf1" path="res://Scripts/VisualizerScene/ZoomingPolychoron.gd" id="3_yqb44"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8n0tl"]
 albedo_texture = ExtResource("2_8n0tl")
@@ -36,7 +37,7 @@ _autoRotateCheckbox = NodePath("CanvasLayer/Control/interactuables/autorotate")
 _resetButton = NodePath("CanvasLayer/Control/interactuables/reset")
 
 [node name="fondo" type="MeshInstance3D" parent="."]
-transform = Transform3D(32, 0, 0, 0, 27.7128, 16, 0, -16, 27.7128, 0, 0, -6.23249)
+transform = Transform3D(77.5514, 0, 0, 0, 38.3917, 19.4091, 0, -22.1655, 33.6175, 0, -4.34799, -6.23249)
 material_override = SubResource("StandardMaterial3D_8n0tl")
 mesh = SubResource("QuadMesh_k4wph")
 
@@ -45,6 +46,7 @@ transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.87
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.9058, 4.62964)
+script = ExtResource("3_yqb44")
 
 [node name="Pentacoro" type="MeshInstance4D" parent="."]
 mesh = SubResource("Pentachoron_qjt2q")

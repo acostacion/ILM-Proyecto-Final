@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://beortgxi00qq6"]
 
-[ext_resource type="Script" path="res://Scripts/drag_and_drop.gd" id="1_4g608"]
+[ext_resource type="Script" uid="uid://cqrikv0cl17ua" path="res://Scripts/PhysicsScene/drag_and_drop.gd" id="1_4g608"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4g608"]
 
