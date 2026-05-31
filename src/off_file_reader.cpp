@@ -1,17 +1,20 @@
 #include "off_file_reader.h"
+#include <godot_cpp/classes/project_settings.hpp>
 
 using namespace godot;
 
-// TODO cambiar antes de commitear.
 void OffFileReader::_bind_methods() {
     ClassDB::bind_method(D_METHOD("loadOffFile", "file"), &OffFileReader::loadOffFile);
 }
 
-void OffFileReader::loadOffFile(std::string f) {
+void OffFileReader::loadOffFile(String f) {
     vertices.clear();
     faces.clear();
 
-    std::ifstream file(f);
+    // pasa del string de godot al de c++ pork si no se raya el compile
+    std::string ruta = f.utf8().get_data();
+
+    std::ifstream file(ruta);
     if(!file) return;
 
     std::string s;
@@ -43,5 +46,4 @@ void OffFileReader::loadOffFile(std::string f) {
         file >> bardoma >> v1 >> v2 >> v3;
         faces.push_back({v1, v2, v3});
     }
-
 }

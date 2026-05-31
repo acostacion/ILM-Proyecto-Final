@@ -25,6 +25,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_CLASS(Node4D);
 	GDREGISTER_CLASS(Mesh4D);
+	GDREGISTER_CLASS(OffFileReader);
 	GDREGISTER_CLASS(Tesseract);
 	GDREGISTER_CLASS(Pentachoron);
 	GDREGISTER_CLASS(Hexadecachoron);
@@ -33,7 +34,6 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(MeshInstance4D);
 	GDREGISTER_CLASS(CollisionShape4D);
 	GDREGISTER_CLASS(RigidBody4D);
-	GDREGISTER_CLASS(OffFileReader);
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

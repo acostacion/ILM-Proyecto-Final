@@ -6,18 +6,17 @@
 #include <godot_cpp/variant/vector4.hpp>
 
 #include "mesh_4d.hpp"
+#include "off_file_reader.h"
 
 namespace godot
 {
-    class Pentachoron : public Mesh4D
+    class Pentachoron : public OffFileReader
     {
-        GDCLASS(Pentachoron, Mesh4D)
+        GDCLASS(Pentachoron, OffFileReader)
     protected:
         Vector4 size = {1, 1, 1, 1};
 
         static void _bind_methods();
-        void _generate_vertices() override;
-        void _generate_faces() override;
 
     public:
         Pentachoron();
