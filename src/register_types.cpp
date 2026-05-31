@@ -6,6 +6,8 @@
 #include "pentachoron.h"
 #include "hexadecachoron.h"
 #include "icositetrachoron.h"
+#include "grand_hexacosichoron.h"
+#include "hexacosichoron.h"
 #include "off_file_reader.h"
 #include "generic_mesh_4d.h"
 #include "mesh_instance_4d.h"
@@ -30,6 +32,8 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(Pentachoron);
 	GDREGISTER_CLASS(Hexadecachoron);
 	GDREGISTER_CLASS(Icositetrachoron);
+	GDREGISTER_CLASS(GrandHexacosichoron);
+	GDREGISTER_CLASS(Hexacosichoron);
 	GDREGISTER_CLASS(GenericMesh4D);
 	GDREGISTER_CLASS(MeshInstance4D);
 	GDREGISTER_CLASS(CollisionShape4D);
