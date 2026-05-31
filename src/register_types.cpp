@@ -4,6 +4,7 @@
 #include "mesh_4d.hpp"
 #include "tesseract.h"
 #include "pentachoron.h"
+#include "hexadecachoron.h"
 #include "generic_mesh_4d.h"
 #include "mesh_instance_4d.h"
 #include "collision_shape_4d.h"
@@ -24,6 +25,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(Mesh4D);
 	GDREGISTER_CLASS(Tesseract);
 	GDREGISTER_CLASS(Pentachoron);
+	GDREGISTER_CLASS(Hexadecachoron);
 	GDREGISTER_CLASS(GenericMesh4D);
 	GDREGISTER_CLASS(MeshInstance4D);
 	GDREGISTER_CLASS(CollisionShape4D);

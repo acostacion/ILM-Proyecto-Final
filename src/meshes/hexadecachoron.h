@@ -9,22 +9,19 @@
 
 namespace godot
 {
-    class Pentachoron : public Mesh4D
+    class Hexadecachoron : public Mesh4D
     {
-        GDCLASS(Pentachoron, Mesh4D)
+        GDCLASS(Hexadecachoron, Mesh4D)
     protected:
-        // Size de los lados del hypercube
         Vector4 size = {1, 1, 1, 1};
 
         static void _bind_methods();
-        // Generar los 16 vertices ( 8 vertices 1 cubo * 2 cubos)
         void _generate_vertices() override;
-        // Generar los 24 cuadrados (6 caras * 4 cuadrados por cara)
         void _generate_faces() override;
 
     public:
-        Pentachoron();
-        ~Pentachoron() = default;
+        Hexadecachoron();
+        ~Hexadecachoron() = default;
 
         // SETTERS Y GETTERS
         void set_size(Vector4 p_size) { size = p_size; }
