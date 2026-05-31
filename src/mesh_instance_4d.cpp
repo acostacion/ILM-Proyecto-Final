@@ -170,7 +170,7 @@ MeshInstance4D::MeshInstance4D() : w_min(-1.0f), w_max(1.0f)
     Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
     material->set_albedo(Color(1.0f, 0.0f, 0.5f, 1.0f)); // morao
     // material->set_shading_mode(BaseMaterial3D::SHADING_MODE_UNSHADED);
-    // material->set_cull_mode(BaseMaterial3D::CULL_DISABLED);             // Mostrar ambas caras
+    material->set_cull_mode(BaseMaterial3D::CULL_DISABLED);             // Mostrar ambas caras
     // material->set_shading_mode(BaseMaterial3D::SHADING_MODE_PER_PIXEL); // Iluminacion por pixel
     mesh_instance->set_material_override(material);
 }

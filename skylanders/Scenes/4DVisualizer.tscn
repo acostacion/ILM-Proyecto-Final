@@ -11,7 +11,7 @@ heightmap_scale = 16.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_k4wph"]
 
-[sub_resource type="Pentachoron" id="Pentachoron_k4wph"]
+[sub_resource type="Pentachoron" id="Pentachoron_qjt2q"]
 
 [sub_resource type="Tesseract" id="Tesseract_qjt2q"]
 
@@ -39,7 +39,7 @@ transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.87
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 5)
 
 [node name="Pentacoro" type="MeshInstance4D" parent="."]
-mesh = SubResource("Pentachoron_k4wph")
+mesh = SubResource("Pentachoron_qjt2q")
 scale = Vector4(3, 3, 3, 3)
 script = ExtResource("3_qjt2q")
 
