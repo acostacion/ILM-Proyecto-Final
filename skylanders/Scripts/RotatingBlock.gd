@@ -3,7 +3,8 @@ extends MeshInstance4D
 
 var rotating = false
 
-func _input(event):
+# unhandled input va cuando no se esta interaccionando con ningun nodo control
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			rotating = true
