@@ -8,6 +8,12 @@ import sys
 # This lets SCons know that we're using godot-cpp, from the godot-cpp folder.
 env = SConscript("godot-cpp/SConstruct")
 
+# Windows/MSVC: meter la info de depuracion en los .obj (/Z7) en lugar de un
+# PDB de compilador aparte (/Zi).
+if env["platform"] == "windows" and any(f in env["CCFLAGS"] for f in ("/Zi", "/ZI")):
+    env["CCFLAGS"] = [f for f in env["CCFLAGS"] if f not in ("/Zi", "/ZI")]
+    env.Append(CCFLAGS=["/Z7"])
+
 # Configures the 'src' directory as a source for header files.
 env.Append(CPPPATH=["src/"])
 
