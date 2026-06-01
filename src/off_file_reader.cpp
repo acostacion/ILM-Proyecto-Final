@@ -4,15 +4,28 @@
 using namespace godot;
 
 void OffFileReader::_bind_methods() {
+
     ClassDB::bind_method(D_METHOD("loadOffFile", "file"), &OffFileReader::loadOffFile);
+
+    ClassDB::bind_method(D_METHOD("set_off_path", "path"), &OffFileReader::set_off_path);
+    ClassDB::bind_method(D_METHOD("get_off_path"), &OffFileReader::get_off_path);
+
+    // el hint FILE es el selector de archivos, y "*.off" lo filtra
+    ADD_PROPERTY(
+        PropertyInfo(Variant::STRING, "off_path", PROPERTY_HINT_FILE, "*.off"),
+        "set_off_path", "get_off_path"
+    );
 }
 
 void OffFileReader::loadOffFile(String f) {
     vertices.clear();
     faces.clear();
 
+    // Godot maneja las rutas de forma diferente a C++, asi que hay que convertirla a una ruta absoluta 
+    // y luego a un string de c++ para poder abrir el archivo.
+    String abs = ProjectSettings::get_singleton()->globalize_path(f);
     // pasa del string de godot al de c++ pork si no se raya el compile
-    std::string ruta = f.utf8().get_data();
+    std::string ruta = abs.utf8().get_data();
 
     std::ifstream file(ruta);
     if(!file) return;

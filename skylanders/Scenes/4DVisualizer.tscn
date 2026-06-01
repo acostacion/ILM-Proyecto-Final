@@ -57,9 +57,11 @@ script = ExtResource("3_qjt2q")
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("_meshInstance4D", "_tesseractButton", "_pentachoronButton", "_hexadecachoronButton", "_icositetrachoronButton", "_hexacosichoronButton", "_grandHexacosichoronButton")]
 layout_mode = 0
@@ -76,48 +78,52 @@ _hexadecachoron = SubResource("Hexadecachoron_qjt2q")
 _icositetrachoron = SubResource("Icositetrachoron_yqb44")
 _hexacosichoron = SubResource("Hexacosichoron_qjt2q")
 _grandHexacosichoron = SubResource("GrandHexacosichoron_yqb44")
-_tesseractButton = NodePath("Contenedor vertical/Botones/Tesseract")
-_pentachoronButton = NodePath("Contenedor vertical/Botones/Pentachoron")
-_hexadecachoronButton = NodePath("Contenedor vertical/Botones/Hexadecachoron")
-_icositetrachoronButton = NodePath("Contenedor vertical/Botones2/Icositetrachoron2")
-_hexacosichoronButton = NodePath("Contenedor vertical/Botones2/Hexacosichoron")
-_grandHexacosichoronButton = NodePath("Contenedor vertical/Botones2/Grand Hexacosichoron")
+_tesseractButton = NodePath("VSlider/Contenedor vertical/Tesseract")
+_pentachoronButton = NodePath("VSlider/Contenedor vertical/Pentachoron")
+_hexadecachoronButton = NodePath("VSlider/Contenedor vertical/Hexadecachoron")
+_icositetrachoronButton = NodePath("VSlider/Contenedor vertical/Icositetrachoron2")
+_hexacosichoronButton = NodePath("VSlider/Contenedor vertical/Hexacosichoron")
+_grandHexacosichoronButton = NodePath("VSlider/Contenedor vertical/Grand Hexacosichoron")
 
-[node name="Contenedor vertical" type="VBoxContainer" parent="CanvasLayer/Control/CenterContainer"]
+[node name="VSlider" type="VSlider" parent="CanvasLayer/Control/CenterContainer"]
 layout_mode = 2
+ticks_on_borders = true
 
-[node name="Botones" type="HBoxContainer" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical"]
-layout_mode = 2
+[node name="Contenedor vertical" type="VBoxContainer" parent="CanvasLayer/Control/CenterContainer/VSlider"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -524.0
+offset_right = 509.0
+grow_vertical = 0
 
-[node name="Pentachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones"]
+[node name="Pentachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "	Pentacoro"
 
-[node name="Tesseract" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones"]
+[node name="Tesseract" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "Teseracto"
 
-[node name="Hexadecachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones"]
+[node name="Hexadecachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "Hexadecacoro"
 
-[node name="Botones2" type="HBoxContainer" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical"]
-layout_mode = 2
-
-[node name="Icositetrachoron2" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones2"]
+[node name="Icositetrachoron2" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "Icositetracoro"
 
-[node name="Hexacosichoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones2"]
+[node name="Hexacosichoron" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "Hexacosicoro"
 
-[node name="Grand Hexacosichoron" type="Button" parent="CanvasLayer/Control/CenterContainer/Contenedor vertical/Botones2"]
+[node name="Grand Hexacosichoron" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
 text = "Gran Hexacosicoro"
