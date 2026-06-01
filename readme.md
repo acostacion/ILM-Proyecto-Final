@@ -20,7 +20,7 @@ classDiagram
 
         + Vector4 position
         + Vector4 scale
-        + float rot -> XY, XZ, XW, YZ, YW, ZW
+        + Rotation4D rot -> XY, XZ, XW, YZ, YW, ZW
 
         + getters y setters de pos, rot, scale... ()
     }
