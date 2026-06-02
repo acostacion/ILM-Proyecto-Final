@@ -442,6 +442,7 @@ _meshInstance4D = NodePath("../../../../../MeshInstance4D")
 _optionButton = NodePath(".")
 
 [node name="ExitButton" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 0
 offset_left = -39.0
 offset_top = 556.0
 offset_right = 142.0

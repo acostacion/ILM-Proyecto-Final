@@ -13,7 +13,7 @@ config_version=5
 config/name="skylanders"
 run/main_scene="uid://cy5s7h4n77akd"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://difufis84kcjg"
 
 [display]
 

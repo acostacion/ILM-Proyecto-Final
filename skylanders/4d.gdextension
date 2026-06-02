@@ -3,5 +3,7 @@ entry_symbol = "example_library_init"
 compatibility_minimum = 4.1
 
 [libraries]
-windows.x86_64.debug = "res://bin/gdexample.windows.template_debug.dev.x86_64.dll"
-windows.x86_64.release = "res://bin/gdexample.windows.template_debug.x86_64.dll"
+windows.x86_64.debug = "res://bin/gdexample.windows.template_debug.x86_64.dll"
+windows.x86_64.release = "res://bin/gdexample.windows.template_release.x86_64.dll"
+web.debug.wasm32 = "res://bin/gdexample.web.template_debug.wasm32.wasm"
+web.release.wasm32 = "res://bin/gdexample.web.template_release.wasm32.wasm"
