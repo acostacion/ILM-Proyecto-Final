@@ -15,7 +15,7 @@ func _process(delta):
 			mouse_input += _zoomVel * delta
 			
 	if(Input.is_action_just_pressed("scrollDown")):
-		if (fov < 120.0):
+		if (fov < 104.0):
 			mouse_input -= _zoomVel * delta
 		
 	fov -= mouse_input

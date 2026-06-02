@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bapyq5vuo07td"]
+[gd_scene load_steps=2 format=3 uid="uid://bwg81pspo4hve"]
 
 [ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/VisualizerScene/UIMeshSelector.gd" id="1_22fom"]
 

@@ -1,0 +1,454 @@
+[gd_scene load_steps=23 format=3 uid="uid://dmx1jor6bxy04"]
+
+[ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/VisualizerScene/UI4DControlPannelVisualizer.gd" id="1_ond7x"]
+[ext_resource type="Texture2D" uid="uid://u7lq7p2dauh" path="res://Sprites/1200px-Desert.jpg" id="2_ond7x"]
+[ext_resource type="Script" uid="uid://ces8wr67ufjf1" path="res://Scripts/VisualizerScene/ZoomingPolychoron.gd" id="3_kgqhu"]
+[ext_resource type="Script" uid="uid://cvnrq3gxpn2t2" path="res://Scripts/VisualizerScene/RotatingPolychoron.gd" id="4_pe6ro"]
+[ext_resource type="Script" uid="uid://bamdjdb3nemgd" path="res://Scripts/VisualizerScene/3DSceneManager.gd" id="5_4vvbw"]
+[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/VisualizerScene/UIMeshSelector.gd" id="5_nd3dp"]
+[ext_resource type="Script" uid="uid://b4scsnd6sh502" path="res://addons/godot_4d/mesh_descriptor.gd" id="6_rxp8n"]
+[ext_resource type="Texture2D" uid="uid://big0uxedpmgl1" path="res://images/arrowRight.png" id="7_3jie7"]
+[ext_resource type="Texture2D" uid="uid://rb5eb3kjcdyi" path="res://images/arrowLeft.png" id="8_r2sfu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4vvbw"]
+albedo_texture = ExtResource("2_ond7x")
+
+[sub_resource type="QuadMesh" id="QuadMesh_k4wph"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ond7x"]
+
+[sub_resource type="GenericMesh4D" id="GenericMesh4D_4vvbw"]
+mesh = SubResource("CylinderMesh_ond7x")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kgqhu"]
+
+[sub_resource type="GenericMesh4D" id="GenericMesh4D_pe6ro"]
+mesh = SubResource("CylinderMesh_kgqhu")
+
+[sub_resource type="Resource" id="Resource_qt86x"]
+script = ExtResource("6_rxp8n")
+name = "Cilindro"
+mesh = SubResource("GenericMesh4D_pe6ro")
+scale_divisor = 1.0
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[sub_resource type="SphereMesh" id="SphereMesh_nd3dp"]
+
+[sub_resource type="GenericMesh4D" id="GenericMesh4D_rxp8n"]
+mesh = SubResource("SphereMesh_nd3dp")
+
+[sub_resource type="Resource" id="Resource_3jie7"]
+script = ExtResource("6_rxp8n")
+name = "Esfera"
+mesh = SubResource("GenericMesh4D_rxp8n")
+scale_divisor = 1.0
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[sub_resource type="TorusMesh" id="TorusMesh_r2sfu"]
+
+[sub_resource type="GenericMesh4D" id="GenericMesh4D_6inb7"]
+mesh = SubResource("TorusMesh_r2sfu")
+
+[sub_resource type="Resource" id="Resource_s0m57"]
+script = ExtResource("6_rxp8n")
+name = "Toro"
+mesh = SubResource("GenericMesh4D_6inb7")
+scale_divisor = 1.0
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox", "_sliderProjDist", "_sliderWMax", "_sliderWMin", "_orthographicCheckbox", "_resetButton")]
+script = ExtResource("1_ond7x")
+_meshInstance4D = NodePath("MeshInstance4D")
+_sliderXW = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control/XW")
+_sliderYW = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control2/YW")
+_sliderZW = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control3/ZW")
+_wireframeCheckbox = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control4/wireframe")
+_autoRotateCheckbox = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control5/autorotate")
+_sliderProjDist = NodePath("CanvasLayer/Control/MarginContainer/Control/RightOptions/Control/ProjDist")
+_sliderWMax = NodePath("CanvasLayer/Control/MarginContainer/Control/RightOptions/Control2/wMax")
+_sliderWMin = NodePath("CanvasLayer/Control/MarginContainer/Control/RightOptions/Control3/wMin")
+_orthographicCheckbox = NodePath("CanvasLayer/Control/MarginContainer/Control/RightOptions/Control4/Orthographic")
+_resetButton = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/reset")
+
+[node name="fondo" type="MeshInstance3D" parent="."]
+transform = Transform3D(77.5514, 0, 0, 0, 38.3917, 19.4091, 0, -22.1655, 33.6175, 0, -4.34799, -6.23249)
+material_override = SubResource("StandardMaterial3D_4vvbw")
+mesh = SubResource("QuadMesh_k4wph")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.878)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.9058, 4.62964)
+script = ExtResource("3_kgqhu")
+_zoomVel = 100.0
+
+[node name="MeshInstance4D" type="MeshInstance4D" parent="."]
+mesh = SubResource("GenericMesh4D_4vvbw")
+scale = Vector4(1, 1, 1, 0)
+script = ExtResource("4_pe6ro")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_4vvbw")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+
+[node name="LeftOptions" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 0
+offset_right = 130.0
+offset_bottom = 147.0
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="XW" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 130.0
+offset_bottom = 8.0
+grow_vertical = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="XWtext" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -78.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "XW rotate"
+
+[node name="Control2" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="YW" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control2"]
+layout_mode = 2
+offset_right = 130.0
+offset_bottom = 16.0
+grow_vertical = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="YWtext" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "YW rotate"
+
+[node name="Control3" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="ZW" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control3"]
+layout_mode = 2
+offset_right = 130.0
+offset_bottom = 16.0
+grow_vertical = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="ZWtext" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control3"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "ZW rotate"
+
+[node name="Control4" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="wireframe" type="CheckBox" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control4"]
+layout_mode = 2
+offset_right = 24.0
+offset_bottom = 24.0
+grow_vertical = 2
+
+[node name="wireframetext" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control4"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "wireframe"
+
+[node name="Control5" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="autorotate" type="CheckBox" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control5"]
+layout_mode = 2
+offset_right = 24.0
+offset_bottom = 24.0
+grow_vertical = 2
+
+[node name="autorotatetxt" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control5"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "auto rotate"
+
+[node name="reset" type="Button" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "reset transform"
+
+[node name="RightOptions" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -230.0
+offset_bottom = 161.0
+grow_horizontal = 0
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions"]
+custom_minimum_size = Vector2(251.355, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="ProjDist" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 130.0
+offset_bottom = 8.0
+grow_vertical = 2
+max_value = 10.0
+step = 0.25
+value = 1.0
+
+[node name="ProjDistText" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Projection Dist"
+
+[node name="Control2" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions"]
+custom_minimum_size = Vector2(251.355, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="wMax" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control2"]
+layout_mode = 2
+offset_right = 130.0
+offset_bottom = 16.0
+grow_vertical = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="wMaxText" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "W max"
+
+[node name="Control3" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions"]
+custom_minimum_size = Vector2(251.355, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="wMin" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control3"]
+layout_mode = 2
+offset_right = 130.0
+offset_bottom = 16.0
+grow_vertical = 2
+min_value = -1.0
+max_value = 0.0
+step = 0.1
+value = -1.0
+
+[node name="wMinText" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control3"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "W min"
+
+[node name="Control4" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions"]
+custom_minimum_size = Vector2(251.355, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Orthographic" type="CheckBox" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control4"]
+layout_mode = 2
+offset_right = 24.0
+offset_bottom = 24.0
+grow_vertical = 2
+
+[node name="OrthographicText" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control4"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Orthographic"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Control/MarginContainer/Control" node_paths=PackedStringArray("_meshInstance4D", "_optionButton")]
+layout_mode = 2
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+item_count = 1
+popup/item_0/id = 0
+script = ExtResource("5_nd3dp")
+_meshes = Array[ExtResource("6_rxp8n")]([SubResource("Resource_qt86x"), SubResource("Resource_3jie7"), SubResource("Resource_s0m57")])
+_meshInstance4D = NodePath("../../../../../MeshInstance4D")
+_optionButton = NodePath(".")
+
+[node name="Physics" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Physics"
+icon = ExtResource("7_3jie7")
+flat = true
+icon_alignment = 2
+
+[node name="4DVisualizer" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -54.0
+offset_right = 108.0
+offset_bottom = 54.0
+grow_vertical = 2
+text = "4D Viewer"
+icon = ExtResource("8_r2sfu")
+flat = true
+
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/Physics" to="CanvasLayer/Control" method="_on_physics_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/4DVisualizer" to="CanvasLayer/Control" method="_on_d_visualizer_pressed"]

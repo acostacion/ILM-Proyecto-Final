@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cy5s7h4n77akd"]
 
-[ext_resource type="Shader" uid="uid://bka10msfaalh3" path="res://Shaders/hole.gdshader" id="1_7q7q3"]
-[ext_resource type="PackedScene" uid="uid://c14ldgr78r8nv" path="res://Scenes/main_menu.tscn" id="2_bi5fs"]
+[ext_resource type="Shader" uid="uid://bka10msfaalh3" path="res://Shaders/hole.gdshader" id="1_834gb"]
+[ext_resource type="PackedScene" uid="uid://c14ldgr78r8nv" path="res://Scenes/UI/main_menu.tscn" id="2_miyge"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bi5fs"]
 
@@ -18,7 +18,7 @@ noise = SubResource("FastNoiseLite_okq71")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wosnj"]
 render_priority = 0
-shader = ExtResource("1_7q7q3")
+shader = ExtResource("1_834gb")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_t3l2h")
 shader_parameter/layers = 16
 shader_parameter/depth_amount = 3.14
@@ -53,4 +53,4 @@ transform = Transform3D(1, 0, 0, 0, 0.94391, 0.330201, 0, -0.330201, 0.94391, 0.
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.706823, 0.707391, 0, -0.707391, 0.706823, 0, 3.48024, 4.01783)
 
-[node name="MainMenu" parent="." instance=ExtResource("2_bi5fs")]
+[node name="MainMenu" parent="." instance=ExtResource("2_miyge")]

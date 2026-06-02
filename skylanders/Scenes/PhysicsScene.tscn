@@ -1,33 +1,31 @@
-[gd_scene load_steps=28 format=3 uid="uid://b8jssyvvrngxe"]
+[gd_scene load_steps=18 format=3 uid="uid://b8jssyvvrngxe"]
 
 [ext_resource type="Script" uid="uid://bl7k8vb2ok15a" path="res://Scripts/PhysicsScene/PhysicsSceneManager.gd" id="1_bxpf8"]
 [ext_resource type="Script" uid="uid://cqrikv0cl17ua" path="res://Scripts/PhysicsScene/drag_and_drop.gd" id="1_dofh8"]
-[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/VisualizerScene/UIMeshSelector.gd" id="2_cyn45"]
-[ext_resource type="Script" uid="uid://b4scsnd6sh502" path="res://addons/godot_4d/mesh_descriptor.gd" id="3_adnnc"]
 [ext_resource type="Texture2D" uid="uid://big0uxedpmgl1" path="res://images/arrowRight.png" id="4_81a2h"]
 [ext_resource type="Texture2D" uid="uid://rb5eb3kjcdyi" path="res://images/arrowLeft.png" id="5_bxpf8"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_81a2h"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_adnnc"]
 points = PackedVector3Array(-0.75, -0.75, -0.75, 0.75, -0.75, -0.75, -0.75, 0.75, -0.75, 0.75, 0.75, -0.75, -0.75, -0.75, 0.75, 0.75, -0.75, 0.75, -0.75, 0.75, 0.75, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, 0.75, 0.75, 0.75, 1.5, 1.5, -1.5, 1.5, -1.5, 1.5, -1.5, 1.5, 1.5, 1.5, 1.5, 1.5)
 
 [sub_resource type="Tesseract" id="Tesseract_cyn45"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bxpf8"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_81a2h"]
 points = PackedVector3Array(-0.75, -0.75, -0.75, 0.75, -0.75, -0.75, -0.75, 0.75, -0.75, 0.75, 0.75, -0.75, -0.75, -0.75, 0.75, 0.75, -0.75, 0.75, -0.75, 0.75, 0.75, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, 0.75, 0.75, 0.75, 1.5, 1.5, -1.5, 1.5, -1.5, 1.5, -1.5, 1.5, 1.5, 1.5, 1.5, 1.5)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sg0in"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bxpf8"]
 points = PackedVector3Array(0, 0, 0, 0, 0, -1.41421, 0, -1.41421, 0, -1.41421, 0, 0, 1.41421, 0, 0, 0, 0, 1.41421, 0, 1.41421, 0)
 
 [sub_resource type="OffFileReader" id="OffFileReader_bxpf8"]
 off_path = "res://addons/godot_4d/off_meshes/Hexadecachoron.off"
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lynmb"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t3qo2"]
 points = PackedVector3Array(0.56921, 0.734847, 1.03923, 0.474342, -1.83712, 0, -1.89737, 0, 0, 0.474342, 0.612372, -1.73205, 0.406579, 0.524891, 0.742307)
 
 [sub_resource type="OffFileReader" id="OffFileReader_lynmb"]
 off_path = "res://addons/godot_4d/off_meshes/Pentachoron.off"
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qv334"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sg0in"]
 points = PackedVector3Array(1.2, -1.2, -1.2, -1.2, -1.2, -1.2, 0, -2, 0, -0.857143, -0.857143, -0.857143, 0.857143, -0.857143, -0.857143, 0, 0, -2, -1.2, -1.2, 1.2, 1.2, -1.2, 1.2, 0, 0, 0, -0.857143, -0.857143, 0.857143, -2, 0, 0, 0.857143, -0.857143, 0.857143, 2, 0, 0, 0, 0, 2, -0.857143, 0.857143, 0.857143, -1.2, 1.2, 1.2, 0.857143, 0.857143, 0.857143, -0.857143, 0.857143, -0.857143, 0.857143, 0.857143, -0.857143, 1.2, 1.2, -1.2, 0, 2, 0, -1.2, 1.2, -1.2, 1.2, 1.2, 1.2)
 
 [sub_resource type="OffFileReader" id="OffFileReader_81a2h"]
@@ -45,45 +43,6 @@ albedo_color = Color(0.72, 0.5472, 0.144, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_81a2h"]
 material = SubResource("StandardMaterial3D_81a2h")
 
-[sub_resource type="OffFileReader" id="OffFileReader_spwxx"]
-off_path = "res://addons/godot_4d/off_meshes/Pentachoron.off"
-
-[sub_resource type="Resource" id="Resource_s0m57"]
-script = ExtResource("3_adnnc")
-name = "Pentacoro"
-mesh = SubResource("OffFileReader_spwxx")
-scale_divisor = 0.5
-metadata/_custom_type_script = "uid://b4scsnd6sh502"
-
-[sub_resource type="Tesseract" id="Tesseract_s3m0x"]
-
-[sub_resource type="Resource" id="Resource_qt86x"]
-script = ExtResource("3_adnnc")
-name = "Teseracto"
-mesh = SubResource("Tesseract_s3m0x")
-scale_divisor = 2.0
-metadata/_custom_type_script = "uid://b4scsnd6sh502"
-
-[sub_resource type="OffFileReader" id="OffFileReader_h356x"]
-off_path = "res://addons/godot_4d/off_meshes/Hexadecachoron.off"
-
-[sub_resource type="Resource" id="Resource_20pve"]
-script = ExtResource("3_adnnc")
-name = "Hexadecacoro"
-mesh = SubResource("OffFileReader_h356x")
-scale_divisor = 0.75
-metadata/_custom_type_script = "uid://b4scsnd6sh502"
-
-[sub_resource type="OffFileReader" id="OffFileReader_o47t5"]
-off_path = "res://addons/godot_4d/off_meshes/Icositetrachoron.off"
-
-[sub_resource type="Resource" id="Resource_s8qk6"]
-script = ExtResource("3_adnnc")
-name = "Icositetracoro"
-mesh = SubResource("OffFileReader_o47t5")
-scale_divisor = 1.0
-metadata/_custom_type_script = "uid://b4scsnd6sh502"
-
 [node name="PhysicsScene" type="Node3D"]
 script = ExtResource("1_bxpf8")
 
@@ -92,7 +51,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape4D" type="CollisionShape4D" parent="CambiaForma"]
-shape = SubResource("ConvexPolygonShape3D_81a2h")
+shape = SubResource("ConvexPolygonShape3D_adnnc")
 
 [node name="MeshInstance4D" type="MeshInstance4D" parent="CambiaForma"]
 mesh = SubResource("Tesseract_cyn45")
@@ -104,7 +63,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape4D" type="CollisionShape4D" parent="Teseracto"]
-shape = SubResource("ConvexPolygonShape3D_bxpf8")
+shape = SubResource("ConvexPolygonShape3D_81a2h")
 
 [node name="MeshInstance4D" type="MeshInstance4D" parent="Teseracto"]
 mesh = SubResource("Tesseract_cyn45")
@@ -115,7 +74,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape4D" type="CollisionShape4D" parent="Hexadecacoro"]
-shape = SubResource("ConvexPolygonShape3D_sg0in")
+shape = SubResource("ConvexPolygonShape3D_bxpf8")
 
 [node name="MeshInstance4D" type="MeshInstance4D" parent="Hexadecacoro"]
 mesh = SubResource("OffFileReader_bxpf8")
@@ -127,7 +86,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape4D" type="CollisionShape4D" parent="PentaCoro"]
-shape = SubResource("ConvexPolygonShape3D_lynmb")
+shape = SubResource("ConvexPolygonShape3D_t3qo2")
 
 [node name="MeshInstance4D" type="MeshInstance4D" parent="PentaCoro"]
 mesh = SubResource("OffFileReader_lynmb")
@@ -139,7 +98,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape4D" type="CollisionShape4D" parent="Icositetracoro"]
-shape = SubResource("ConvexPolygonShape3D_qv334")
+shape = SubResource("ConvexPolygonShape3D_sg0in")
 
 [node name="MeshInstance4D" type="MeshInstance4D" parent="Icositetracoro"]
 mesh = SubResource("OffFileReader_81a2h")
@@ -267,25 +226,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0
 
-[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Control/MarginContainer/Control" node_paths=PackedStringArray("_meshInstance4D", "_optionButton")]
-unique_name_in_owner = true
-layout_mode = 2
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -32.0
-offset_top = -20.0
-grow_horizontal = 0
-grow_vertical = 0
-item_count = 1
-popup/item_0/id = 0
-script = ExtResource("2_cyn45")
-_meshes = Array[ExtResource("3_adnnc")]([SubResource("Resource_s0m57"), SubResource("Resource_qt86x"), SubResource("Resource_20pve"), SubResource("Resource_s8qk6")])
-_meshInstance4D = NodePath("../../../../../CambiaForma/MeshInstance4D")
-_optionButton = NodePath(".")
-
-[node name="3DButton" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+[node name="3DVisualzer" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -316,4 +257,5 @@ text = "4D Viewer
 icon = ExtResource("5_bxpf8")
 flat = true
 
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/3DVisualzer" to="." method="_on_3d_visualzer_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/4DVisualizer" to="." method="_on_4d_visualizer_pressed"]
