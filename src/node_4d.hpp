@@ -106,9 +106,8 @@ namespace godot
         }
 
     public:
-        godot::Node4D::Node4D() : position_4d(0, 0, 0, 0), rotation_4d(0, 0, 0, 0, 0, 0), scale_4d(1, 1, 1, 1)
-        {
-        }
+        Node4D() : position_4d(0, 0, 0, 0), rotation_4d(0, 0, 0, 0, 0, 0), scale_4d(1, 1, 1, 1)
+        {        }
         ~Node4D() = default;
 
         // GETTERS & SETTERS

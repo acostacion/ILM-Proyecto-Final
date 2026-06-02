@@ -19,13 +19,13 @@ namespace godot
 
         void loadOffFile(String file);
 
-        void OffFileReader::set_off_path(const String &p)
+        void set_off_path(const String &p)
         {
             off_path = p;
             loadOffFile(off_path);
         }
 
-        String OffFileReader::get_off_path() const
+        String get_off_path() const
         {
             return off_path;
         }
