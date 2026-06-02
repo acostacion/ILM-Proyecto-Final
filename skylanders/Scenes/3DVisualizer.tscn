@@ -431,6 +431,14 @@ _meshes = Array[ExtResource("6_rxp8n")]([SubResource("Resource_qt86x"), SubResou
 _meshInstance4D = NodePath("../../../../../MeshInstance4D")
 _optionButton = NodePath(".")
 
+[node name="ExitButton" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 0
+offset_left = -39.0
+offset_top = 556.0
+offset_right = 142.0
+offset_bottom = 587.0
+text = "Salir al menú principal"
+
 [node name="Physics" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 6
@@ -461,5 +469,6 @@ text = "4D Viewer"
 icon = ExtResource("8_r2sfu")
 flat = true
 
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/ExitButton" to="CanvasLayer/Control" method="_on_exit_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/Physics" to="CanvasLayer/Control" method="_on_physics_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/4DVisualizer" to="CanvasLayer/Control" method="_on_d_visualizer_pressed"]
