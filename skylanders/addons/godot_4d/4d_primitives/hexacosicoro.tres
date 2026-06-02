@@ -1,0 +1,4 @@
+[gd_resource type="OffFileReader" format=3 uid="uid://b1fbn5idrvs6"]
+
+[resource]
+off_path = "res://addons/godot_4d/off_meshes/Grand_Hexacosichoron.off"

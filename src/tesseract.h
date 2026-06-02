@@ -9,6 +9,8 @@
 
 namespace godot
 {
+    // Clase que representa un Tesseract, un hipercubo 4D.
+    // Es una Mesh4D que genera los vertices y caras de un tesseract.
     class Tesseract : public Mesh4D
     {
         GDCLASS(Tesseract, Mesh4D)

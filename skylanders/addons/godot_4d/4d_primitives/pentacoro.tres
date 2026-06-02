@@ -1,0 +1,4 @@
+[gd_resource type="OffFileReader" format=3 uid="uid://lpkeu32s5rvy"]
+
+[resource]
+off_path = "res://addons/godot_4d/off_meshes/Pentachoron.off"

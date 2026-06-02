@@ -1,24 +1,16 @@
 #pragma once
 #include <vector>
 
+#include <godot_cpp/variant/vector3.hpp>
+#include <godot_cpp/variant/vector4.hpp>
+#include <godot_cpp/core/math.hpp>
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/core/memory.hpp>
 
 namespace godot
 {
-    // Brian Kernighan's Algorithm para contar bits activos
-    static int count_set_bits(int n)
-    {
-        int count = 0;
-        while (n > 0)
-        {
-            n &= (n - 1);
-            count += 1;
-        }
-        return count;
-    }
-
-    static Vector3 v4_to_v3(const Vector4 &v4, bool orthographic, float projection_distance, Vector4 p_scale = Vector4(1, 1, 1, 1))
+    // Proyecta un Vector4 a Vector3 usando proyeccion perspectiva u ortografica
+    inline Vector3 v4_to_v3(const Vector4 &v4, bool orthographic, float projection_distance, Vector4 p_scale = Vector4(1, 1, 1, 1))
     {
         float scale = 1.0f;
         if (!orthographic)
@@ -43,11 +35,14 @@ namespace godot
             return position == other.position;
         }
     };
+    // Cada cara es minimo un triangulo formado por 3 vertices, referenciados por sus indices
     struct Triangle
     {
         int v1, v2, v3; // Indices de los vertices que forman el triangulo
     };
 
+    // Clase recurso que representa una malla 4D, con vertices y caras.
+    // Es la clase base para objetos 4D como el Tesseract, offReader, GenericMesh4D, que generan su propia geometria.
     class Mesh4D : public Resource
     {
         GDCLASS(Mesh4D, Resource)
@@ -58,14 +53,16 @@ namespace godot
         std::vector<Triangle> faces;
 
         static void _bind_methods() {};
-
+        // Generar los vertices de la mesh, implementado por clases hijas
         virtual void _generate_vertices() {};
+        // Generar las caras de la mesh, implementado por clases hijas
         virtual void _generate_faces() {};
 
     public:
         Mesh4D() = default;
         ~Mesh4D() = default;
 
+        // GETTERS Y SETTERS
         const std::vector<Vertex> &get_vertices() const { return vertices; }
         const std::vector<Triangle> &get_faces() const { return faces; }
     };

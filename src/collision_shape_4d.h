@@ -7,6 +7,8 @@ namespace godot
 {
     class MeshInstance4D; // Forward declaration
 
+    // CollisionShape4D es un CollisionShape3D que actualiza su forma cada frame 
+    // para representar la proyeccion de la mesh 4D en el mundo 3D.
     class CollisionShape4D : public CollisionShape3D
     {
         GDCLASS(CollisionShape4D, CollisionShape3D)
@@ -14,6 +16,8 @@ namespace godot
     protected:
         Ref<ConvexPolygonShape3D> shape;
         MeshInstance4D *target = nullptr;
+        // Para evitar procesar geometria repetida
+        uint64_t last_version = 0;
 
         static void _bind_methods();
 
