@@ -110,7 +110,7 @@ void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
             vertex_count += 3;
         }
     }
-    
+
     if (vertex_count == 0)
     {
         mesh_instance->set_mesh(nullptr); // limpia la malla anterior
@@ -183,7 +183,7 @@ void MeshInstance4D::_bind_methods()
 MeshInstance4D::MeshInstance4D() : w_min(-1.0f), w_max(1.0f),
                                    projection_distance(3.0f),
                                    orthographic(false),
-                                   wireframe(true)
+                                   wireframe(false)
 {
     // Crea MeshInstance3D hijo
     mesh_instance = memnew(MeshInstance3D);
