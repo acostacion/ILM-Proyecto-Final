@@ -1,17 +1,17 @@
-[gd_scene load_steps=24 format=3 uid="uid://cclfddh4ya3n0"]
+[gd_scene load_steps=25 format=3 uid="uid://cclfddh4ya3n0"]
 
 [ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/VisualizerScene/UI4DControlPannelVisualizer.gd" id="1_tubae"]
-[ext_resource type="Texture2D" uid="uid://bnppek3p34kcj" path="res://Sprites/Screenshot01.png" id="2_8n0tl"]
+[ext_resource type="Texture2D" uid="uid://bw4ou1e1qf3qh" path="res://Sprites/img1_ufvumj.jpg" id="2_31pc1"]
 [ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/VisualizerScene/UIMeshSelector.gd" id="3_k4wph"]
 [ext_resource type="Script" uid="uid://cvnrq3gxpn2t2" path="res://Scripts/VisualizerScene/RotatingPolychoron.gd" id="3_qjt2q"]
 [ext_resource type="Script" uid="uid://ces8wr67ufjf1" path="res://Scripts/VisualizerScene/ZoomingPolychoron.gd" id="3_yqb44"]
+[ext_resource type="Script" uid="uid://rw4s0cp3vovj" path="res://Scripts/VisualizerScene/4DSceneManager.gd" id="5_31pc1"]
 [ext_resource type="Script" uid="uid://b4scsnd6sh502" path="res://addons/godot_4d/mesh_descriptor.gd" id="6_nsi3r"]
 [ext_resource type="Texture2D" uid="uid://big0uxedpmgl1" path="res://images/arrowRight.png" id="7_ox4vv"]
 [ext_resource type="Texture2D" uid="uid://rb5eb3kjcdyi" path="res://images/arrowLeft.png" id="8_31pc1"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8n0tl"]
-albedo_texture = ExtResource("2_8n0tl")
-heightmap_scale = 16.0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_soee5"]
+albedo_texture = ExtResource("2_31pc1")
 
 [sub_resource type="QuadMesh" id="QuadMesh_k4wph"]
 
@@ -93,7 +93,7 @@ _resetButton = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions
 
 [node name="fondo" type="MeshInstance3D" parent="."]
 transform = Transform3D(77.5514, 0, 0, 0, 38.3917, 19.4091, 0, -22.1655, 33.6175, 0, -4.34799, -6.23249)
-material_override = SubResource("StandardMaterial3D_8n0tl")
+material_override = SubResource("StandardMaterial3D_soee5")
 mesh = SubResource("QuadMesh_k4wph")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -119,6 +119,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("5_31pc1")
 metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
@@ -440,7 +441,7 @@ _meshes = Array[ExtResource("6_nsi3r")]([SubResource("Resource_s0m57"), SubResou
 _meshInstance4D = NodePath("../../../../../MeshInstance4D")
 _optionButton = NodePath(".")
 
-[node name="3DButton" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+[node name="3DVisualizer" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -470,4 +471,5 @@ text = "Physics"
 icon = ExtResource("8_31pc1")
 flat = true
 
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/PhysicsButton" to="." method="_on_physics_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/3DVisualizer" to="CanvasLayer/Control" method="_on_d_visualizer_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/PhysicsButton" to="CanvasLayer/Control" method="_on_physics_button_pressed"]

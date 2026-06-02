@@ -108,6 +108,3 @@ func _process(delta: float) -> void:
 		_meshInstance4D.rot_yw += _speed * delta
 		_meshInstance4D.rot_zw += _speed * delta
 	pass
-	
-func _on_physics_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/PhysicsScene.tscn")

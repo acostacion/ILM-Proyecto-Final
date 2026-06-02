@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dmx1jor6bxy04"]
+[gd_scene load_steps=26 format=3 uid="uid://dmx1jor6bxy04"]
 
 [ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/VisualizerScene/UI4DControlPannelVisualizer.gd" id="1_ond7x"]
 [ext_resource type="Texture2D" uid="uid://u7lq7p2dauh" path="res://Sprites/1200px-Desert.jpg" id="2_ond7x"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/VisualizerScene/UIMeshSelector.gd" id="5_nd3dp"]
 [ext_resource type="Script" uid="uid://b4scsnd6sh502" path="res://addons/godot_4d/mesh_descriptor.gd" id="6_rxp8n"]
 [ext_resource type="Texture2D" uid="uid://big0uxedpmgl1" path="res://images/arrowRight.png" id="7_3jie7"]
+[ext_resource type="ArrayMesh" uid="uid://c5bmp52gticp5" path="res://Anquises/Arthas.obj" id="8_kgqhu"]
 [ext_resource type="Texture2D" uid="uid://rb5eb3kjcdyi" path="res://images/arrowLeft.png" id="8_r2sfu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4vvbw"]
@@ -15,10 +16,10 @@ albedo_texture = ExtResource("2_ond7x")
 
 [sub_resource type="QuadMesh" id="QuadMesh_k4wph"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_ond7x"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_pe6ro"]
 
 [sub_resource type="GenericMesh4D" id="GenericMesh4D_4vvbw"]
-mesh = SubResource("CylinderMesh_ond7x")
+mesh = SubResource("CylinderMesh_pe6ro")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_kgqhu"]
 
@@ -53,6 +54,16 @@ mesh = SubResource("TorusMesh_r2sfu")
 script = ExtResource("6_rxp8n")
 name = "Toro"
 mesh = SubResource("GenericMesh4D_6inb7")
+scale_divisor = 1.0
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[sub_resource type="GenericMesh4D" id="GenericMesh4D_nd3dp"]
+mesh = ExtResource("8_kgqhu")
+
+[sub_resource type="Resource" id="Resource_rxp8n"]
+script = ExtResource("6_rxp8n")
+name = "Anquises"
+mesh = SubResource("GenericMesh4D_nd3dp")
 scale_divisor = 1.0
 metadata/_custom_type_script = "uid://b4scsnd6sh502"
 
@@ -416,7 +427,7 @@ grow_vertical = 0
 item_count = 1
 popup/item_0/id = 0
 script = ExtResource("5_nd3dp")
-_meshes = Array[ExtResource("6_rxp8n")]([SubResource("Resource_qt86x"), SubResource("Resource_3jie7"), SubResource("Resource_s0m57")])
+_meshes = Array[ExtResource("6_rxp8n")]([SubResource("Resource_qt86x"), SubResource("Resource_3jie7"), SubResource("Resource_s0m57"), SubResource("Resource_rxp8n")])
 _meshInstance4D = NodePath("../../../../../MeshInstance4D")
 _optionButton = NodePath(".")
 
