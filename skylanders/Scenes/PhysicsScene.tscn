@@ -264,5 +264,6 @@ text = "4D Viewer
 icon = ExtResource("5_bxpf8")
 flat = true
 
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/3DVisualzer" to="." method="_on_3d_visualzer_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/4DVisualizer" to="." method="_on_4d_visualizer_pressed"]

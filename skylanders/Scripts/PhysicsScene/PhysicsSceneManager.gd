@@ -5,3 +5,6 @@ func _on_4d_visualizer_pressed() -> void:
 
 func _on_3d_visualzer_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/3DVisualizer.tscn")
+	
+func _on_exit_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/UI/FondoMainMenu.tscn")
