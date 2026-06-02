@@ -7,11 +7,11 @@
 using namespace godot;
 
 void CollisionShape4D::_bind_methods()
-{
-}
+{}
+
 void CollisionShape4D::_ready()
 {
-    
+
     shape.instantiate();
     set_shape(shape);
     // Buscar el MeshInstance4D entre los hermanos
@@ -45,55 +45,39 @@ void CollisionShape4D::_ready()
 void godot::CollisionShape4D::_process(double delta)
 {
     if (!target)
-    {
-        print_error("[CollisionShape4D] target es nullptr");
         return;
-    }
+
+    uint64_t v = target->get_projection_version();
+    if (v == last_version)
+        return;
+    last_version = v;
 
     // Leer geometria del observado
     const PackedVector3Array &points = target->get_projected_points();
 
-    // Filtrar duplicados con tolerancia y descartar NaN
-    PackedVector3Array unique_points;
-    const float tol = 0.01f;
-
     // print_verbose("[CollisionShape4D] recibidos: " + String::num(points.size()));
+    // Filtrar NaN/infinitos
+    PackedVector3Array clean;
     for (int i = 0; i < points.size(); i++)
-    {
-        Vector3 p = points[i];
+        if (points[i].is_finite())
+            clean.append(points[i]);
 
-        if (Math::is_nan(p.x) || Math::is_nan(p.y) || Math::is_nan(p.z))
-            continue;
-
-        bool found = false;
-        for (int j = 0; j < unique_points.size(); j++)
-        {
-            if (p.distance_to(unique_points[j]) < tol)
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-            unique_points.append(p);
-    }
-    // print_verbose("[CollisionShape4D] unicos: " + String::num(unique_points.size()));
-    if (unique_points.size() >= 4)
-        shape->set_points(unique_points);
+    if (clean.size() < 4) return;
+    
     // Verificar que los puntos no tengan volumen para evitar error de convexidad
-    Vector3 min_p = unique_points[0];
-    Vector3 max_p = unique_points[0];
-    for (int i = 1; i < unique_points.size(); i++)
+    Vector3 min_p = clean[0], max_p = clean[0];
+    for (int i = 1; i < clean.size(); i++)
     {
-        min_p = min_p.min(unique_points[i]);
-        max_p = max_p.max(unique_points[i]);
+        min_p = min_p.min(clean[i]);
+        max_p = max_p.max(clean[i]);
     }
     Vector3 extent = max_p - min_p;
 
-    // Si alguna dimension es casi 0, los puntos son planos o lineales, lo que da error de convexidad. 
+    // Si alguna dimension es casi 0, los puntos son planos o lineales, lo que da error de convexidad.
     // Evitar actualizar en ese caso.
+    float tol = 0.01f;
     if (extent.x < tol || extent.y < tol || extent.z < tol)
         return;
 
-    shape->set_points(unique_points);
+    shape->set_points(clean);
 }

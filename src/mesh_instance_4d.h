@@ -12,14 +12,12 @@ namespace godot
     // fordward declaration
     class MeshInstance3D;
 
+    // MeshInstance4D:
+    // es un nodo que representa una instancia de una Mesh4D en el mundo 4D.
+    // Se encarga de proyectar los vertices de la mesh al espacio 3D y renderizarlos usando un MeshInstance3D.
     class MeshInstance4D : public Node4D
     {
         GDCLASS(MeshInstance4D, Node4D)
-
-        // // Vertices de 4 coordenadas
-        // std::vector<Vertex> vertices;
-        // // Cada triangulo es un struct de 3 indices de vertices
-        // std::vector<Triangle> faces;
 
         void draw_faces(const std::vector<Vector4> &transformed_vertex);
         void draw_edges(const std::vector<Vector4> &transformed_vertex);
@@ -31,10 +29,8 @@ namespace godot
         // Usamos un MeshInstance3D como renderer en el mundo 3D
         MeshInstance3D *mesh_instance = nullptr;
 
-        // Mostrar aristas
-        bool show_edges = false;
         // Mostrar caras (triangulos)
-        bool show_faces = true;
+        bool wireframe = true;
 
         // Rango de w visible
         float w_min = -1.0f, w_max = 1.0f;
@@ -43,8 +39,12 @@ namespace godot
         // Prespectiva u ortografica en eje w
         bool orthographic = false;
 
-        // Cache de la última proyección
+        // Cache de la ultima proyeccion para evitar calculos repetidos,
+        // solo se actualiza al cambiar parametros o geometria
         PackedVector3Array projected_points;
+        // Indica si la geometria o parametros de proyeccion han cambiado
+        // para evitar calculos repetidos
+        uint64_t last_version = 0;
 
         // Actualizar la malla
         void _update_mesh();
@@ -82,11 +82,10 @@ namespace godot
         // Visualizacion
         void set_wireframe(bool p_show)
         {
-            show_edges = p_show;
-            show_faces = !p_show;
+            wireframe = p_show;
             _update_mesh();
         }
-        bool get_wireframe() const { return show_edges; }
+        bool get_wireframe() const { return wireframe; }
         void set_orthographic(bool p_ortho)
         {
             orthographic = p_ortho;
@@ -146,6 +145,8 @@ namespace godot
             Node4D::set_rot_zw(p_zw);
             _update_mesh();
         }
+        // Version de la proyeccion para evitar calculos repetidos
+        uint64_t get_projection_version() const { return last_version; }
     };
 
 } // namespace godot

@@ -10,14 +10,28 @@
 
 using namespace godot;
 
-void godot::Tesseract::_bind_methods()
+#pragma region HELPERS
+// Brian Kernighan's Algorithm para contar bits activos
+static int count_set_bits(int n)
+{
+    int count = 0;
+    while (n > 0)
+    {
+        n &= (n - 1);
+        count += 1;
+    }
+    return count;
+}
+#pragma endregion
+
+void Tesseract::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("set_size", "size"), &Tesseract::set_size);
     ClassDB::bind_method(D_METHOD("get_size"), &Tesseract::get_size);
     // Propiedades
     ADD_PROPERTY(PropertyInfo(Variant::VECTOR4, "size"), "set_size", "get_size");
 }
-
+#pragma region Explicacion de vertices y caras del hipercubo 4D
 // Un hipercubo 4D tiene 16 vertices.
 // Cada vertice es una combinacion de +h o -h en cada dimension.
 // mientras que un cubo tiene 8 vertices, con combinaciones de +h o -h en x,y,z.
@@ -68,7 +82,8 @@ void godot::Tesseract::_bind_methods()
 //	   \   |                     \    |
 //	    \  |                      \   |
 //      (-h,+h,+h,+h) -------------- (+h,+h,+h,+h)
-void godot::Tesseract::_generate_vertices()
+#pragma endregion
+void Tesseract::_generate_vertices()
 {
     for (int i = 0; i < 16; i++)
     {
@@ -85,9 +100,8 @@ void godot::Tesseract::_generate_vertices()
     }
 }
 
-void godot::Tesseract::_generate_faces()
+void Tesseract::_generate_faces()
 {
-
     // Generar los 24 cuadrados del hipercubo 4D
     // Hay C(4,2) = 6 formas de elegir 2 dimensiones que varian
     // Para cada forma, hay 2^2 = 4 valores para las dimensiones fijas
@@ -131,7 +145,7 @@ void godot::Tesseract::_generate_faces()
     }
 }
 
-godot::Tesseract::Tesseract() : size(1, 1, 1, 1)
+Tesseract::Tesseract() : size(1, 1, 1, 1)
 {
     _generate_vertices();
     _generate_faces();

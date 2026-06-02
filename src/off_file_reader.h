@@ -12,7 +12,6 @@ namespace godot
 
     protected:
         static void _bind_methods();
-        String _rutaCarmen = "C:/Users/Usuario/Music/ILM Proyecto Final/src/off_meshes/"; // TODO kitar luego cuando se solucione
         String off_path;
     public:
         OffFileReader() = default;

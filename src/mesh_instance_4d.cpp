@@ -57,7 +57,8 @@ static std::vector<Vector4> clip_polygon_w(const std::vector<Vector4> &polygon, 
 
 void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
 {
-    SurfaceTool *st = memnew(SurfaceTool);
+    Ref<SurfaceTool> st;
+    st.instantiate();
     st->begin(Mesh::PRIMITIVE_TRIANGLES);
 
     // Limpiar cache de proyeccion
@@ -84,9 +85,9 @@ void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
         for (size_t i = 1; i < polygon.size() - 1; i++)
         {
             // Proyectamos en el mundo 3D los vertices 4D
-            Vector3 p1 = v4_to_v3(polygon[0] + position, orthographic, projection_distance, scale);
-            Vector3 p2 = v4_to_v3(polygon[i] + position, orthographic, projection_distance, scale);
-            Vector3 p3 = v4_to_v3(polygon[i + 1] + position, orthographic, projection_distance, scale);
+            Vector3 p1 = v4_to_v3(polygon[0] + position_4d, orthographic, projection_distance, scale_4d);
+            Vector3 p2 = v4_to_v3(polygon[i] + position_4d, orthographic, projection_distance, scale_4d);
+            Vector3 p3 = v4_to_v3(polygon[i + 1] + position_4d, orthographic, projection_distance, scale_4d);
             // Si alguno de los puntos no es finito, saltamos el triangulo para evitar errores de renderizado
             if (!p1.is_finite() || !p2.is_finite() || !p3.is_finite())
                 continue;
@@ -109,18 +110,31 @@ void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
             vertex_count += 3;
         }
     }
+    
+    if (vertex_count == 0)
+    {
+        mesh_instance->set_mesh(nullptr); // limpia la malla anterior
+        return;
+    }
 
-    Ref<ArrayMesh> mesh = st->commit();
-    mesh_instance->set_mesh(mesh);
+    Ref<ArrayMesh> array_mesh = st->commit();
+    mesh_instance->set_mesh(array_mesh);
 }
 
 void MeshInstance4D::draw_edges(const std::vector<Vector4> &transformed_vertex)
 {
-    SurfaceTool *st = memnew(SurfaceTool);
+    Ref<SurfaceTool> st;
+    st.instantiate();
     st->begin(Mesh::PRIMITIVE_LINES);
 
+    if (transformed_vertex.empty() || mesh->get_faces().empty())
+    {
+        mesh_instance->set_mesh(nullptr);
+        return;
+    }
+
     for (const auto &v : transformed_vertex)
-        st->add_vertex(v4_to_v3(v + position, orthographic, projection_distance, scale));
+        st->add_vertex(v4_to_v3(v + position_4d, orthographic, projection_distance, scale_4d));
 
     // Conectar segun los indices originales
     for (const auto &face : mesh->get_faces())
@@ -133,8 +147,8 @@ void MeshInstance4D::draw_edges(const std::vector<Vector4> &transformed_vertex)
         st->add_index(face.v1);
     }
 
-    Ref<ArrayMesh> mesh = st->commit();
-    mesh_instance->set_mesh(mesh);
+    Ref<ArrayMesh> array_mesh = st->commit();
+    mesh_instance->set_mesh(array_mesh);
 }
 
 void MeshInstance4D::_bind_methods()
@@ -169,7 +183,7 @@ void MeshInstance4D::_bind_methods()
 MeshInstance4D::MeshInstance4D() : w_min(-1.0f), w_max(1.0f),
                                    projection_distance(3.0f),
                                    orthographic(false),
-                                   show_edges(false)
+                                   wireframe(true)
 {
     // Crea MeshInstance3D hijo
     mesh_instance = memnew(MeshInstance3D);
@@ -199,6 +213,8 @@ void MeshInstance4D::_update_mesh()
         mesh_instance->set_mesh(nullptr);
         return;
     }
+    // Incrementar version para indicar que la geometria o parametros han cambiado
+    last_version++;
 
     // Vertices transformados
     std::vector<Vector4> transformed_vertex;
@@ -207,7 +223,7 @@ void MeshInstance4D::_update_mesh()
     {
         Vector4 v = v_org.position;
         // Aplica rotaciones 4D
-        v = rotate4D(v, rotation);
+        v = rotate4D(v, rotation_4d);
         transformed_vertex.push_back(v);
     }
 
@@ -216,9 +232,9 @@ void MeshInstance4D::_update_mesh()
         print_error("[MESH 4D] No hay vertices para mostrar");
         return;
     }
-    
+
     // Distinguir modo wireframe
-    if (show_edges)
+    if (wireframe)
         draw_edges(transformed_vertex);
     else
         draw_faces(transformed_vertex);
