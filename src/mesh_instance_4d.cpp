@@ -15,7 +15,8 @@ using namespace godot;
 // Interpolar 4D para que W = w_target
 static Vector4 interp_w(const Vector4 &a, const Vector4 &b, float w_target)
 {
-    float t = (w_target - a.w) / (b.w - a.w);
+    float denom = b.w - a.w;
+    float t = (Math::abs(denom) < 1e-6f) ? 0.0f : (w_target - a.w) / denom;
     return Vector4(
         a.x + t * (b.x - a.x),
         a.y + t * (b.y - a.y),
@@ -86,9 +87,12 @@ void MeshInstance4D::draw_faces(const std::vector<Vector4> &transformed_vertex)
             Vector3 p1 = v4_to_v3(polygon[0] + position, orthographic, projection_distance, scale);
             Vector3 p2 = v4_to_v3(polygon[i] + position, orthographic, projection_distance, scale);
             Vector3 p3 = v4_to_v3(polygon[i + 1] + position, orthographic, projection_distance, scale);
-
+            // Si alguno de los puntos no es finito, saltamos el triangulo para evitar errores de renderizado
+            if (!p1.is_finite() || !p2.is_finite() || !p3.is_finite())
+                continue;
             // Calcular la normal
-            Vector3 normal = (p2 - p1).cross(p3 - p1).normalized();
+            // Vector3 normal = (p2 - p1).cross(p3 - p1).normalized();
+            Vector3 normal = (p3 - p1).cross(p2 - p1).normalized();
 
             projected_points.append(p1);
             projected_points.append(p2);
@@ -162,7 +166,10 @@ void MeshInstance4D::_bind_methods()
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "w_max"), "set_w_max", "get_w_max");
 }
 
-MeshInstance4D::MeshInstance4D() : w_min(-1.0f), w_max(1.0f)
+MeshInstance4D::MeshInstance4D() : w_min(-1.0f), w_max(1.0f),
+                                   projection_distance(3.0f),
+                                   orthographic(false),
+                                   show_edges(false)
 {
     // Crea MeshInstance3D hijo
     mesh_instance = memnew(MeshInstance3D);
@@ -170,7 +177,7 @@ MeshInstance4D::MeshInstance4D() : w_min(-1.0f), w_max(1.0f)
     Ref<StandardMaterial3D> material = memnew(StandardMaterial3D);
     material->set_albedo(Color(1.0f, 0.0f, 0.5f, 1.0f)); // morao
     // material->set_shading_mode(BaseMaterial3D::SHADING_MODE_UNSHADED);
-    material->set_cull_mode(BaseMaterial3D::CULL_DISABLED);             // Mostrar ambas caras
+    material->set_cull_mode(BaseMaterial3D::CULL_DISABLED); // Mostrar ambas caras
     // material->set_shading_mode(BaseMaterial3D::SHADING_MODE_PER_PIXEL); // Iluminacion por pixel
     mesh_instance->set_material_override(material);
 }
@@ -181,14 +188,14 @@ void MeshInstance4D::_update_mesh()
         return;
     if (!mesh.is_valid())
     {
-        //print_error("[MeshInstance4D] Mesh no asignado");
+        // print_error("[MeshInstance4D] Mesh no asignado");
         mesh_instance->set_mesh(nullptr); // Limpiar visualizacion
         return;
     }
 
     if (mesh->get_vertices().empty() || mesh->get_faces().empty())
     {
-        //print_error("[MeshInstance4D] Vertices o faces vacíos");
+        // print_error("[MeshInstance4D] Vertices o faces vacíos");
         mesh_instance->set_mesh(nullptr);
         return;
     }
@@ -209,7 +216,7 @@ void MeshInstance4D::_update_mesh()
         print_error("[MESH 4D] No hay vertices para mostrar");
         return;
     }
-
+    
     // Distinguir modo wireframe
     if (show_edges)
         draw_edges(transformed_vertex);

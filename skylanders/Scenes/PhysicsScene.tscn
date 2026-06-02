@@ -1,0 +1,319 @@
+[gd_scene load_steps=28 format=3 uid="uid://b8jssyvvrngxe"]
+
+[ext_resource type="Script" uid="uid://bl7k8vb2ok15a" path="res://Scripts/PhysicsScene/PhysicsSceneManager.gd" id="1_bxpf8"]
+[ext_resource type="Script" uid="uid://cqrikv0cl17ua" path="res://Scripts/PhysicsScene/drag_and_drop.gd" id="1_dofh8"]
+[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/VisualizerScene/UIMeshSelector.gd" id="2_cyn45"]
+[ext_resource type="Script" uid="uid://b4scsnd6sh502" path="res://addons/godot_4d/mesh_descriptor.gd" id="3_adnnc"]
+[ext_resource type="Texture2D" uid="uid://big0uxedpmgl1" path="res://images/arrowRight.png" id="4_81a2h"]
+[ext_resource type="Texture2D" uid="uid://rb5eb3kjcdyi" path="res://images/arrowLeft.png" id="5_bxpf8"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_81a2h"]
+points = PackedVector3Array(-0.75, -0.75, -0.75, 0.75, -0.75, -0.75, -0.75, 0.75, -0.75, 0.75, 0.75, -0.75, -0.75, -0.75, 0.75, 0.75, -0.75, 0.75, -0.75, 0.75, 0.75, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, 0.75, 0.75, 0.75, 1.5, 1.5, -1.5, 1.5, -1.5, 1.5, -1.5, 1.5, 1.5, 1.5, 1.5, 1.5)
+
+[sub_resource type="Tesseract" id="Tesseract_cyn45"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bxpf8"]
+points = PackedVector3Array(-0.75, -0.75, -0.75, 0.75, -0.75, -0.75, -0.75, 0.75, -0.75, 0.75, 0.75, -0.75, -0.75, -0.75, 0.75, 0.75, -0.75, 0.75, -0.75, 0.75, 0.75, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, -1.5, -1.5, -1.5, 1.5, 0.75, 0.75, 0.75, 1.5, 1.5, -1.5, 1.5, -1.5, 1.5, -1.5, 1.5, 1.5, 1.5, 1.5, 1.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_sg0in"]
+points = PackedVector3Array(0, 0, 0, 0, 0, -1.41421, 0, -1.41421, 0, -1.41421, 0, 0, 1.41421, 0, 0, 0, 0, 1.41421, 0, 1.41421, 0)
+
+[sub_resource type="OffFileReader" id="OffFileReader_bxpf8"]
+off_path = "res://addons/godot_4d/off_meshes/Hexadecachoron.off"
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lynmb"]
+points = PackedVector3Array(0.56921, 0.734847, 1.03923, 0.474342, -1.83712, 0, -1.89737, 0, 0, 0.474342, 0.612372, -1.73205, 0.406579, 0.524891, 0.742307)
+
+[sub_resource type="OffFileReader" id="OffFileReader_lynmb"]
+off_path = "res://addons/godot_4d/off_meshes/Pentachoron.off"
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qv334"]
+points = PackedVector3Array(1.2, -1.2, -1.2, -1.2, -1.2, -1.2, 0, -2, 0, -0.857143, -0.857143, -0.857143, 0.857143, -0.857143, -0.857143, 0, 0, -2, -1.2, -1.2, 1.2, 1.2, -1.2, 1.2, 0, 0, 0, -0.857143, -0.857143, 0.857143, -2, 0, 0, 0.857143, -0.857143, 0.857143, 2, 0, 0, 0, 0, 2, -0.857143, 0.857143, 0.857143, -1.2, 1.2, 1.2, 0.857143, 0.857143, 0.857143, -0.857143, 0.857143, -0.857143, 0.857143, 0.857143, -0.857143, 1.2, 1.2, -1.2, 0, 2, 0, -1.2, 1.2, -1.2, 1.2, 1.2, 1.2)
+
+[sub_resource type="OffFileReader" id="OffFileReader_81a2h"]
+off_path = "res://addons/godot_4d/off_meshes/Icositetrachoron.off"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_81a2h"]
+size = Vector3(29.8403, 17.3981, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_adnnc"]
+size = Vector3(29.6717, 1, 26.3251)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_81a2h"]
+albedo_color = Color(0.72, 0.5472, 0.144, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_81a2h"]
+material = SubResource("StandardMaterial3D_81a2h")
+
+[sub_resource type="OffFileReader" id="OffFileReader_spwxx"]
+off_path = "res://addons/godot_4d/off_meshes/Pentachoron.off"
+
+[sub_resource type="Resource" id="Resource_s0m57"]
+script = ExtResource("3_adnnc")
+name = "Pentacoro"
+mesh = SubResource("OffFileReader_spwxx")
+scale_divisor = 0.5
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[sub_resource type="Tesseract" id="Tesseract_s3m0x"]
+
+[sub_resource type="Resource" id="Resource_qt86x"]
+script = ExtResource("3_adnnc")
+name = "Teseracto"
+mesh = SubResource("Tesseract_s3m0x")
+scale_divisor = 2.0
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[sub_resource type="OffFileReader" id="OffFileReader_h356x"]
+off_path = "res://addons/godot_4d/off_meshes/Hexadecachoron.off"
+
+[sub_resource type="Resource" id="Resource_20pve"]
+script = ExtResource("3_adnnc")
+name = "Hexadecacoro"
+mesh = SubResource("OffFileReader_h356x")
+scale_divisor = 0.75
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[sub_resource type="OffFileReader" id="OffFileReader_o47t5"]
+off_path = "res://addons/godot_4d/off_meshes/Icositetrachoron.off"
+
+[sub_resource type="Resource" id="Resource_s8qk6"]
+script = ExtResource("3_adnnc")
+name = "Icositetracoro"
+mesh = SubResource("OffFileReader_o47t5")
+scale_divisor = 1.0
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[node name="PhysicsScene" type="Node3D"]
+script = ExtResource("1_bxpf8")
+
+[node name="CambiaForma" type="RigidBody4D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape4D" type="CollisionShape4D" parent="CambiaForma"]
+shape = SubResource("ConvexPolygonShape3D_81a2h")
+
+[node name="MeshInstance4D" type="MeshInstance4D" parent="CambiaForma"]
+mesh = SubResource("Tesseract_cyn45")
+scale = Vector4(1, 1, 1, 0)
+
+[node name="Teseracto" type="RigidBody4D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.89521, 0, 1.95231)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape4D" type="CollisionShape4D" parent="Teseracto"]
+shape = SubResource("ConvexPolygonShape3D_bxpf8")
+
+[node name="MeshInstance4D" type="MeshInstance4D" parent="Teseracto"]
+mesh = SubResource("Tesseract_cyn45")
+
+[node name="Hexadecacoro" type="RigidBody4D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.48629, 0, -0.283005)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape4D" type="CollisionShape4D" parent="Hexadecacoro"]
+shape = SubResource("ConvexPolygonShape3D_sg0in")
+
+[node name="MeshInstance4D" type="MeshInstance4D" parent="Hexadecacoro"]
+mesh = SubResource("OffFileReader_bxpf8")
+scale = Vector4(2, 2, 2, 2)
+
+[node name="PentaCoro" type="RigidBody4D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.61259, 0, -3.00064)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape4D" type="CollisionShape4D" parent="PentaCoro"]
+shape = SubResource("ConvexPolygonShape3D_lynmb")
+
+[node name="MeshInstance4D" type="MeshInstance4D" parent="PentaCoro"]
+mesh = SubResource("OffFileReader_lynmb")
+scale = Vector4(3, 3, 3, 3)
+
+[node name="Icositetracoro" type="RigidBody4D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.48506, 0, 4.05027)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape4D" type="CollisionShape4D" parent="Icositetracoro"]
+shape = SubResource("ConvexPolygonShape3D_qv334")
+
+[node name="MeshInstance4D" type="MeshInstance4D" parent="Icositetracoro"]
+mesh = SubResource("OffFileReader_81a2h")
+scale = Vector4(2, 2, 2, 2)
+
+[node name="Box" type="Node3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, -1.87616, 0)
+
+[node name="Wall1" type="RigidBody3D" parent="Box"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14.9872, 0, 0)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/Wall1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.94147, 0)
+shape = SubResource("BoxShape3D_81a2h")
+
+[node name="Wall2" type="RigidBody3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/Wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.94147, 0)
+shape = SubResource("BoxShape3D_81a2h")
+
+[node name="Wall3" type="RigidBody3D" parent="Box"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.6915, 0, 0)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/Wall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.94147, 0)
+shape = SubResource("BoxShape3D_81a2h")
+
+[node name="Wall4" type="RigidBody3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.4871)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/Wall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.94147, 0)
+shape = SubResource("BoxShape3D_81a2h")
+
+[node name="Floor" type="RigidBody3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.34593, 0)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0422106, 0, 0.0282593)
+shape = SubResource("BoxShape3D_adnnc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box/Floor"]
+transform = Transform3D(31.164, 0, 0, 0, 1, 0, 0, 0, 31.164, 0, 0, 0)
+mesh = SubResource("BoxMesh_81a2h")
+
+[node name="ceiling" type="RigidBody3D" parent="Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.9244, 0)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+gravity_scale = 0.0
+freeze = true
+freeze_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/ceiling"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0422106, 0, 0.0282593)
+shape = SubResource("BoxShape3D_adnnc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.4773)
+script = ExtResource("1_dofh8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.322018, 0.946734, 0, -0.946734, 0.322018, 0, 0, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Control/MarginContainer/Control" node_paths=PackedStringArray("_meshInstance4D", "_optionButton")]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+item_count = 1
+popup/item_0/id = 0
+script = ExtResource("2_cyn45")
+_meshes = Array[ExtResource("3_adnnc")]([SubResource("Resource_s0m57"), SubResource("Resource_qt86x"), SubResource("Resource_20pve"), SubResource("Resource_s8qk6")])
+_meshInstance4D = NodePath("../../../../../CambiaForma/MeshInstance4D")
+_optionButton = NodePath(".")
+
+[node name="3DButton" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "3D Viewer"
+icon = ExtResource("4_81a2h")
+flat = true
+icon_alignment = 2
+
+[node name="4DVisualizer" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -54.0
+offset_right = 108.0
+offset_bottom = 54.0
+grow_vertical = 2
+text = "4D Viewer
+"
+icon = ExtResource("5_bxpf8")
+flat = true
+
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/4DVisualizer" to="." method="_on_4d_visualizer_pressed"]

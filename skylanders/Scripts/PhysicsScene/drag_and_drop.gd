@@ -21,6 +21,7 @@ func _try_grab(mouse_pos: Vector2):
 	
 	var space_state = get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(from, to)
+	query.collision_mask = 1 # Solo detecta la capa 1
 	var result = space_state.intersect_ray(query)
 	
 	# Agarramos solo si ha colisionado con un rigidbody

@@ -5,14 +5,10 @@ var rotating = false
 
 # unhandled input va cuando no se esta interaccionando con ningun nodo control
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.is_pressed():
-			rotating = true
-		
-		if event.is_released():
-			rotating = false
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		rotating = event.pressed
 	
-	if event is InputEventMouseMotion and rotating:
+	elif event is InputEventMouseMotion and rotating:
 		var delta = get_process_delta_time()
 		var rel = event.relative
 		

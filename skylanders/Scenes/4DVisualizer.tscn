@@ -1,10 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://cclfddh4ya3n0"]
+[gd_scene load_steps=24 format=3 uid="uid://cclfddh4ya3n0"]
 
 [ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/VisualizerScene/UI4DControlPannelVisualizer.gd" id="1_tubae"]
 [ext_resource type="Texture2D" uid="uid://bnppek3p34kcj" path="res://Sprites/Screenshot01.png" id="2_8n0tl"]
 [ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/VisualizerScene/UIMeshSelector.gd" id="3_k4wph"]
 [ext_resource type="Script" uid="uid://cvnrq3gxpn2t2" path="res://Scripts/VisualizerScene/RotatingPolychoron.gd" id="3_qjt2q"]
 [ext_resource type="Script" uid="uid://ces8wr67ufjf1" path="res://Scripts/VisualizerScene/ZoomingPolychoron.gd" id="3_yqb44"]
+[ext_resource type="Script" uid="uid://b4scsnd6sh502" path="res://addons/godot_4d/mesh_descriptor.gd" id="6_nsi3r"]
+[ext_resource type="Texture2D" uid="uid://big0uxedpmgl1" path="res://images/arrowRight.png" id="7_ox4vv"]
+[ext_resource type="Texture2D" uid="uid://rb5eb3kjcdyi" path="res://images/arrowLeft.png" id="8_31pc1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8n0tl"]
 albedo_texture = ExtResource("2_8n0tl")
@@ -12,29 +15,81 @@ heightmap_scale = 16.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_k4wph"]
 
-[sub_resource type="Pentachoron" id="Pentachoron_qjt2q"]
+[sub_resource type="OffFileReader" id="OffFileReader_ox4vv"]
+off_path = "res://addons/godot_4d/off_meshes/Pentachoron.off"
 
-[sub_resource type="Tesseract" id="Tesseract_qjt2q"]
+[sub_resource type="OffFileReader" id="OffFileReader_spwxx"]
+off_path = "res://addons/godot_4d/off_meshes/Pentachoron.off"
 
-[sub_resource type="Pentachoron" id="Pentachoron_yqb44"]
+[sub_resource type="Resource" id="Resource_s0m57"]
+script = ExtResource("6_nsi3r")
+name = "Pentacoro"
+mesh = SubResource("OffFileReader_spwxx")
+scale_divisor = 1.0
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
 
-[sub_resource type="Hexadecachoron" id="Hexadecachoron_qjt2q"]
+[sub_resource type="Tesseract" id="Tesseract_s3m0x"]
 
-[sub_resource type="Icositetrachoron" id="Icositetrachoron_yqb44"]
+[sub_resource type="Resource" id="Resource_qt86x"]
+script = ExtResource("6_nsi3r")
+name = "Teseracto"
+mesh = SubResource("Tesseract_s3m0x")
+scale_divisor = 4.0
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
 
-[sub_resource type="Hexacosichoron" id="Hexacosichoron_qjt2q"]
+[sub_resource type="OffFileReader" id="OffFileReader_h356x"]
+off_path = "res://addons/godot_4d/off_meshes/Hexadecachoron.off"
 
-[sub_resource type="GrandHexacosichoron" id="GrandHexacosichoron_yqb44"]
+[sub_resource type="Resource" id="Resource_20pve"]
+script = ExtResource("6_nsi3r")
+name = "Hexadecacoro"
+mesh = SubResource("OffFileReader_h356x")
+scale_divisor = 1.5
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
 
-[node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox", "_resetButton")]
+[sub_resource type="OffFileReader" id="OffFileReader_o47t5"]
+off_path = "res://addons/godot_4d/off_meshes/Icositetrachoron.off"
+
+[sub_resource type="Resource" id="Resource_s8qk6"]
+script = ExtResource("6_nsi3r")
+name = "Icositetracoro"
+mesh = SubResource("OffFileReader_o47t5")
+scale_divisor = 2.0
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[sub_resource type="OffFileReader" id="OffFileReader_nyvkp"]
+off_path = "res://addons/godot_4d/off_meshes/Hexacosichoron.off"
+
+[sub_resource type="Resource" id="Resource_mvw1p"]
+script = ExtResource("6_nsi3r")
+name = "Hexacosicoro"
+mesh = SubResource("OffFileReader_nyvkp")
+scale_divisor = 1.5
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[sub_resource type="OffFileReader" id="OffFileReader_uh4u0"]
+off_path = "res://addons/godot_4d/off_meshes/Grand_Hexacosichoron.off"
+
+[sub_resource type="Resource" id="Resource_s56sl"]
+script = ExtResource("6_nsi3r")
+name = "Gran Hexacosicoro"
+mesh = SubResource("OffFileReader_uh4u0")
+scale_divisor = 1.25
+metadata/_custom_type_script = "uid://b4scsnd6sh502"
+
+[node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox", "_sliderProjDist", "_sliderWMax", "_sliderWMin", "_orthographicCheckbox", "_resetButton")]
 script = ExtResource("1_tubae")
-_meshInstance4D = NodePath("Pentacoro")
-_sliderXW = NodePath("CanvasLayer/Control/interactuables/XW")
-_sliderYW = NodePath("CanvasLayer/Control/interactuables/YW")
-_sliderZW = NodePath("CanvasLayer/Control/interactuables/ZW")
-_wireframeCheckbox = NodePath("CanvasLayer/Control/interactuables/wireframe")
-_autoRotateCheckbox = NodePath("CanvasLayer/Control/interactuables/autorotate")
-_resetButton = NodePath("CanvasLayer/Control/interactuables/reset")
+_meshInstance4D = NodePath("MeshInstance4D")
+_sliderXW = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control/XW")
+_sliderYW = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control2/YW")
+_sliderZW = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control3/ZW")
+_wireframeCheckbox = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control4/wireframe")
+_autoRotateCheckbox = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control5/autorotate")
+_sliderProjDist = NodePath("CanvasLayer/Control/MarginContainer/Control/RightOptions/Control/ProjDist")
+_sliderWMax = NodePath("CanvasLayer/Control/MarginContainer/Control/RightOptions/Control2/wMax")
+_sliderWMin = NodePath("CanvasLayer/Control/MarginContainer/Control/RightOptions/Control3/wMin")
+_orthographicCheckbox = NodePath("CanvasLayer/Control/MarginContainer/Control/RightOptions/Control4/Orthographic")
+_resetButton = NodePath("CanvasLayer/Control/MarginContainer/Control/LeftOptions/reset")
 
 [node name="fondo" type="MeshInstance3D" parent="."]
 transform = Transform3D(77.5514, 0, 0, 0, 38.3917, 19.4091, 0, -22.1655, 33.6175, 0, -4.34799, -6.23249)
@@ -47,10 +102,11 @@ transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.87
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.9058, 4.62964)
 script = ExtResource("3_yqb44")
+_zoomVel = 100.0
 
-[node name="Pentacoro" type="MeshInstance4D" parent="."]
-mesh = SubResource("Pentachoron_qjt2q")
-scale = Vector4(3, 3, 3, 3)
+[node name="MeshInstance4D" type="MeshInstance4D" parent="."]
+mesh = SubResource("OffFileReader_ox4vv")
+scale = Vector4(1, 1, 1, 0)
 script = ExtResource("3_qjt2q")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -62,132 +118,356 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("_meshInstance4D", "_tesseractButton", "_pentachoronButton", "_hexadecachoronButton", "_icositetrachoronButton", "_hexacosichoronButton", "_grandHexacosichoronButton")]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 503.0
-offset_right = 1437.0
-offset_bottom = 675.0
-scale = Vector2(0.795, 0.795)
-script = ExtResource("3_k4wph")
-_meshInstance4D = NodePath("../../../Pentacoro")
-_tesseract = SubResource("Tesseract_qjt2q")
-_pentachoron = SubResource("Pentachoron_yqb44")
-_hexadecachoron = SubResource("Hexadecachoron_qjt2q")
-_icositetrachoron = SubResource("Icositetrachoron_yqb44")
-_hexacosichoron = SubResource("Hexacosichoron_qjt2q")
-_grandHexacosichoron = SubResource("GrandHexacosichoron_yqb44")
-_tesseractButton = NodePath("VSlider/Contenedor vertical/Tesseract")
-_pentachoronButton = NodePath("VSlider/Contenedor vertical/Pentachoron")
-_hexadecachoronButton = NodePath("VSlider/Contenedor vertical/Hexadecachoron")
-_icositetrachoronButton = NodePath("VSlider/Contenedor vertical/Icositetrachoron2")
-_hexacosichoronButton = NodePath("VSlider/Contenedor vertical/Hexacosichoron")
-_grandHexacosichoronButton = NodePath("VSlider/Contenedor vertical/Grand Hexacosichoron")
-
-[node name="VSlider" type="VSlider" parent="CanvasLayer/Control/CenterContainer"]
-layout_mode = 2
-ticks_on_borders = true
-
-[node name="Contenedor vertical" type="VBoxContainer" parent="CanvasLayer/Control/CenterContainer/VSlider"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -524.0
-offset_right = 509.0
-grow_vertical = 0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+metadata/_edit_use_anchors_ = true
 
-[node name="Pentachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
+[node name="Control" type="Control" parent="CanvasLayer/Control/MarginContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 55
-text = "	Pentacoro"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
 
-[node name="Tesseract" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 55
-text = "Teseracto"
-
-[node name="Hexadecachoron" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 55
-text = "Hexadecacoro"
-
-[node name="Icositetrachoron2" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 55
-text = "Icositetracoro"
-
-[node name="Hexacosichoron" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 55
-text = "Hexacosicoro"
-
-[node name="Grand Hexacosichoron" type="Button" parent="CanvasLayer/Control/CenterContainer/VSlider/Contenedor vertical"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 55
-text = "Gran Hexacosicoro"
-
-[node name="interactuables" type="VBoxContainer" parent="CanvasLayer/Control"]
+[node name="LeftOptions" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/Control"]
 layout_mode = 0
-offset_right = 173.0
-offset_bottom = 265.0
+offset_right = 130.0
+offset_bottom = 147.0
 
-[node name="XW" type="HSlider" parent="CanvasLayer/Control/interactuables"]
+[node name="Control" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="XW" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 130.0
+offset_bottom = 8.0
+grow_vertical = 2
 min_value = -1.0
 max_value = 1.0
 step = 0.01
 
-[node name="YW" type="HSlider" parent="CanvasLayer/Control/interactuables"]
-layout_mode = 2
-min_value = -1.0
-max_value = 1.0
-step = 0.01
-
-[node name="ZW" type="HSlider" parent="CanvasLayer/Control/interactuables"]
-layout_mode = 2
-min_value = -1.0
-max_value = 1.0
-step = 0.01
-
-[node name="wireframe" type="CheckBox" parent="CanvasLayer/Control/interactuables"]
-layout_mode = 2
-
-[node name="autorotate" type="CheckBox" parent="CanvasLayer/Control/interactuables"]
-layout_mode = 2
-
-[node name="reset" type="Button" parent="CanvasLayer/Control/interactuables"]
-layout_mode = 2
-
-[node name="labeles" type="VBoxContainer" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 178.0
-offset_top = -5.0
-offset_right = 218.0
-offset_bottom = 153.0
-scale = Vector2(1, 0.848258)
-
-[node name="XWtext" type="Label" parent="CanvasLayer/Control/labeles"]
-layout_mode = 2
+[node name="XWtext" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -78.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
 text = "XW rotate"
 
-[node name="YWtext" type="Label" parent="CanvasLayer/Control/labeles"]
+[node name="Control2" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="YW" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control2"]
+layout_mode = 2
+offset_right = 130.0
+offset_bottom = 16.0
+grow_vertical = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="YWtext" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
 text = "YW rotate"
 
-[node name="ZWtext" type="Label" parent="CanvasLayer/Control/labeles"]
+[node name="Control3" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="ZW" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control3"]
+layout_mode = 2
+offset_right = 130.0
+offset_bottom = 16.0
+grow_vertical = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="ZWtext" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control3"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
 text = "ZW rotate"
 
-[node name="wireframetext" type="Label" parent="CanvasLayer/Control/labeles"]
+[node name="Control4" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="wireframe" type="CheckBox" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control4"]
+layout_mode = 2
+offset_right = 24.0
+offset_bottom = 24.0
+grow_vertical = 2
+
+[node name="wireframetext" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control4"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
 text = "wireframe"
 
-[node name="autorotatetxt" type="Label" parent="CanvasLayer/Control/labeles"]
+[node name="Control5" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
+custom_minimum_size = Vector2(230, 22.18)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="autorotate" type="CheckBox" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control5"]
+layout_mode = 2
+offset_right = 24.0
+offset_bottom = 24.0
+grow_vertical = 2
+
+[node name="autorotatetxt" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions/Control5"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
 text = "auto rotate"
 
-[node name="resetext" type="Label" parent="CanvasLayer/Control/labeles"]
+[node name="reset" type="Button" parent="CanvasLayer/Control/MarginContainer/Control/LeftOptions"]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 text = "reset transform"
+
+[node name="RightOptions" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -230.0
+offset_bottom = 161.0
+grow_horizontal = 0
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions"]
+custom_minimum_size = Vector2(251.355, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="ProjDist" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 130.0
+offset_bottom = 8.0
+grow_vertical = 2
+max_value = 10.0
+step = 0.25
+value = 1.0
+
+[node name="ProjDistText" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Projection Dist"
+
+[node name="Control2" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions"]
+custom_minimum_size = Vector2(251.355, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="wMax" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control2"]
+layout_mode = 2
+offset_right = 130.0
+offset_bottom = 16.0
+grow_vertical = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="wMaxText" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "W max"
+
+[node name="Control3" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions"]
+custom_minimum_size = Vector2(251.355, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="wMin" type="HSlider" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control3"]
+layout_mode = 2
+offset_right = 130.0
+offset_bottom = 16.0
+grow_vertical = 2
+min_value = -1.0
+max_value = 0.0
+step = 0.1
+value = -1.0
+
+[node name="wMinText" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control3"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "W min"
+
+[node name="Control4" type="Control" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions"]
+custom_minimum_size = Vector2(251.355, 22.18)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Orthographic" type="CheckBox" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control4"]
+layout_mode = 2
+offset_right = 24.0
+offset_bottom = 24.0
+grow_vertical = 2
+
+[node name="OrthographicText" type="Label" parent="CanvasLayer/Control/MarginContainer/Control/RightOptions/Control4"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Orthographic"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Control/MarginContainer/Control" node_paths=PackedStringArray("_meshInstance4D", "_optionButton")]
+layout_mode = 2
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+item_count = 1
+popup/item_0/id = 0
+script = ExtResource("3_k4wph")
+_meshes = Array[ExtResource("6_nsi3r")]([SubResource("Resource_s0m57"), SubResource("Resource_qt86x"), SubResource("Resource_20pve"), SubResource("Resource_s8qk6"), SubResource("Resource_mvw1p"), SubResource("Resource_s56sl")])
+_meshInstance4D = NodePath("../../../../../MeshInstance4D")
+_optionButton = NodePath(".")
+
+[node name="3DButton" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "3D Viewer"
+icon = ExtResource("7_ox4vv")
+flat = true
+icon_alignment = 2
+
+[node name="PhysicsButton" type="Button" parent="CanvasLayer/Control/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -54.0
+offset_right = 108.0
+offset_bottom = 54.0
+grow_vertical = 2
+text = "Physics"
+icon = ExtResource("8_31pc1")
+flat = true
+
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/Control/PhysicsButton" to="." method="_on_physics_button_pressed"]

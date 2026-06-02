@@ -1,0 +1,189 @@
+[gd_scene load_steps=9 format=3 uid="uid://cclfddh4ya3n0"]
+
+[ext_resource type="Script" uid="uid://bopt1nkeko8mk" path="res://Scripts/VisualizerScene/UI4DControlPannelVisualizer.gd" id="1_tubae"]
+[ext_resource type="Texture2D" uid="uid://bnppek3p34kcj" path="res://Sprites/Screenshot01.png" id="2_8n0tl"]
+[ext_resource type="Script" uid="uid://bwsjuda6r6fm1" path="res://Scripts/VisualizerScene/UIMeshSelector.gd" id="3_k4wph"]
+[ext_resource type="Script" uid="uid://cvnrq3gxpn2t2" path="res://Scripts/VisualizerScene/RotatingPolychoron.gd" id="3_qjt2q"]
+[ext_resource type="Script" uid="uid://ces8wr67ufjf1" path="res://Scripts/VisualizerScene/ZoomingPolychoron.gd" id="3_yqb44"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8n0tl"]
+albedo_texture = ExtResource("2_8n0tl")
+heightmap_scale = 16.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_k4wph"]
+
+[sub_resource type="Pentachoron" id="Pentachoron_qjt2q"]
+
+[node name="4dVisualizer" type="Node3D" node_paths=PackedStringArray("_meshInstance4D", "_sliderXW", "_sliderYW", "_sliderZW", "_wireframeCheckbox", "_autoRotateCheckbox", "_resetButton")]
+script = ExtResource("1_tubae")
+_meshInstance4D = NodePath("Pentacoro")
+_sliderXW = NodePath("CanvasLayer/Control/interactuables/XW")
+_sliderYW = NodePath("CanvasLayer/Control/interactuables/YW")
+_sliderZW = NodePath("CanvasLayer/Control/interactuables/ZW")
+_wireframeCheckbox = NodePath("CanvasLayer/Control/interactuables/wireframe")
+_autoRotateCheckbox = NodePath("CanvasLayer/Control/interactuables/autorotate")
+_resetButton = NodePath("CanvasLayer/Control/interactuables/reset")
+
+[node name="fondo" type="MeshInstance3D" parent="."]
+transform = Transform3D(77.5514, 0, 0, 0, 38.3917, 19.4091, 0, -22.1655, 33.6175, 0, -4.34799, -6.23249)
+material_override = SubResource("StandardMaterial3D_8n0tl")
+mesh = SubResource("QuadMesh_k4wph")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 4.878)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.9058, 4.62964)
+script = ExtResource("3_yqb44")
+
+[node name="Pentacoro" type="MeshInstance4D" parent="."]
+mesh = SubResource("Pentachoron_qjt2q")
+scale = Vector4(3, 3, 3, 3)
+script = ExtResource("3_qjt2q")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1152.0
+offset_top = -648.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="interactuables" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+offset_right = 173.0
+offset_bottom = 265.0
+
+[node name="XW" type="HSlider" parent="CanvasLayer/Control/interactuables"]
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="YW" type="HSlider" parent="CanvasLayer/Control/interactuables"]
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="ZW" type="HSlider" parent="CanvasLayer/Control/interactuables"]
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="wireframe" type="CheckBox" parent="CanvasLayer/Control/interactuables"]
+layout_mode = 2
+
+[node name="autorotate" type="CheckBox" parent="CanvasLayer/Control/interactuables"]
+layout_mode = 2
+
+[node name="reset" type="Button" parent="CanvasLayer/Control/interactuables"]
+layout_mode = 2
+
+[node name="labeles" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+offset_left = 183.0
+offset_right = 305.0
+offset_bottom = 158.0
+scale = Vector2(1, 0.848258)
+
+[node name="XWtext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "XW rotate"
+
+[node name="YWtext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "YW rotate"
+
+[node name="ZWtext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "ZW rotate"
+
+[node name="wireframetext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "wireframe"
+
+[node name="autorotatetxt" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "auto rotate"
+
+[node name="resetext" type="Label" parent="CanvasLayer/Control/labeles"]
+layout_mode = 2
+text = "reset transform"
+
+[node name="VSlider" type="VSlider" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -513.0
+offset_top = -521.0
+grow_horizontal = 0
+grow_vertical = 0
+ticks_on_borders = true
+
+[node name="Pentachoron" type="Button" parent="CanvasLayer/Control/VSlider"]
+layout_mode = 2
+offset_right = 509.0
+offset_bottom = 84.0
+theme_override_font_sizes/font_size = 55
+text = "	Pentacoro"
+
+[node name="Tesseract" type="Button" parent="CanvasLayer/Control/VSlider"]
+layout_mode = 2
+offset_top = 88.0
+offset_right = 509.0
+offset_bottom = 172.0
+theme_override_font_sizes/font_size = 55
+text = "Teseracto"
+
+[node name="Hexadecachoron" type="Button" parent="CanvasLayer/Control/VSlider"]
+layout_mode = 2
+offset_top = 176.0
+offset_right = 509.0
+offset_bottom = 260.0
+theme_override_font_sizes/font_size = 55
+text = "Hexadecacoro"
+
+[node name="Icositetrachoron2" type="Button" parent="CanvasLayer/Control/VSlider"]
+layout_mode = 2
+offset_top = 264.0
+offset_right = 509.0
+offset_bottom = 348.0
+theme_override_font_sizes/font_size = 55
+text = "Icositetracoro"
+
+[node name="Hexacosichoron" type="Button" parent="CanvasLayer/Control/VSlider"]
+layout_mode = 2
+offset_top = 352.0
+offset_right = 509.0
+offset_bottom = 436.0
+theme_override_font_sizes/font_size = 55
+text = "Hexacosicoro"
+
+[node name="Grand Hexacosichoron" type="Button" parent="CanvasLayer/Control/VSlider"]
+layout_mode = 2
+offset_top = 440.0
+offset_right = 509.0
+offset_bottom = 524.0
+theme_override_font_sizes/font_size = 55
+text = "Gran Hexacosicoro"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 20.0
+item_count = 1
+popup/item_0/id = 0
+script = ExtResource("3_k4wph")
